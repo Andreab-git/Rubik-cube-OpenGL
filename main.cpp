@@ -11,9 +11,7 @@
 using namespace std;
 
 struct cube_rotate {
-
     GLfloat angle, x, y, z;
-
 };
 
 GLfloat angle, fAspect, cube_size;
