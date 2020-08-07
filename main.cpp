@@ -3,9 +3,9 @@
 //
 
 // Rubik Cube in OpenGL
-
-#include <GL/gl.h>
-#include <GL/glut.h>
+#define GL_SILENCE_DEPRECATION
+//#include <GL/gl.h>
+#include <GLUT/glut.h>
 #include <vector>
 
 using namespace std;
