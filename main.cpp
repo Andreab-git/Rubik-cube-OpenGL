@@ -1,15 +1,30 @@
-//
-// Created by andrea on 23/06/20.
-//
-
-
-
-
 // Rubik Cube in OpenGL
-#define GL_SILENCE_DEPRECATION
-//#include <GL/gl.h>
-#include <GLUT/glut.h>
+/* TODO: INSERIRE CONTORNI NERI SU FACCE */
+/* TODO: ELIMINARE GAP TRA QUADRATI */
+/* TODO: RINOMINARE TUTTE LE FUNZIONI */
+/* TODO: EVIDENZIARE LA RIGA/COLONNA CHE SI STA PER MUOVERE */
+/* TODO: TROVARE UN RIMPIAZZO A vector OPPURE CAPIRE COSA FA DI PRECISO */
+/* TODO: METTERE UNA TEXTURE DI SFONDO PER RENDERLO PIU' CARINO */
+/* TODO: CAPIRE A CHE CAZZO SERVE using namespace std; */
+
+
 #include <vector>
+#define GL_SILENCE_DEPRECATION
+
+/* ########################################## */
+/* Scommentare per impostare librerie macos */
+
+// #define APPLE
+
+/* ########################################## */
+
+#ifdef APPLE
+#include <GLUT/glut.h>
+#else
+    #include <GL/glut.h>
+    #include <GL/gl.h>
+#endif
+
 
 using namespace std;
 
@@ -85,9 +100,7 @@ void reset_selected_face() {
 }
 
 void set_camera() {
-
     gluLookAt(0, 80, 200, 0, 0, 0, 0, 1, 0);
-
 }
 
 // draw a cube
@@ -422,7 +435,7 @@ int main(int argc, char **argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(400, 350);
-    glutCreateWindow("Visualizacao 3D");
+    glutCreateWindow("Rubik 3D");
     glutDisplayFunc(draw_func);
     glutReshapeFunc(reshape_func);
     glutMouseFunc(mouse_func);
