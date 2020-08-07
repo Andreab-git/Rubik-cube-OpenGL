@@ -2,6 +2,9 @@
 // Created by andrea on 23/06/20.
 //
 
+
+
+
 // Rubik Cube in OpenGL
 #define GL_SILENCE_DEPRECATION
 //#include <GL/gl.h>
