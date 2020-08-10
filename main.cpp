@@ -38,7 +38,8 @@ GLint rot_x, rot_y, crement, x_0, x_k, y_0, y_k, z_0, z_k, gap, gap_crement;
 //cube_rotate cube_rotations[3][3][3];
 vector<cube_rotate> cube_rotations[3][3][3];
 
-void load_visualization_parameters(void);
+/* L'ho commentata perche' sembra non servire... scritta cosi' e' solo un prototipo */
+// void load_visualization_parameters(void);
 
 void apply_rotation(GLfloat angle) {
 
@@ -179,8 +180,6 @@ void draw_cube(int x, int y, int z) {
 // draw function
 void draw_func(void) {
 
-    int x = -cube_size, y = -cube_size, z = -cube_size;
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // reset transformations
@@ -215,7 +214,7 @@ void init_func(void) {
     rot_x = 0.0; // view rotation x
     rot_y = 0.0; // view rotation y
     crement = 5; // rotation (in/de)crement
-    gap = 5;
+    gap = 2;
     gap_crement = 3;
     // initialize cuboid rotations
 
@@ -435,12 +434,12 @@ void mouse_func(int button, int state, int x, int y) {
 int main(int argc, char **argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    glutInitWindowSize(400, 350);
-    glutCreateWindow("Rubik 3D");
+    glutInitWindowSize(400, 400);
+    glutCreateWindow("Project_Rubik-cube-OpenGL");
+    init_func();
     glutDisplayFunc(draw_func);
     glutReshapeFunc(reshape_func);
     glutMouseFunc(mouse_func);
     glutKeyboardFunc(keyboard_func);
-    init_func();
     glutMainLoop();
 } // main
