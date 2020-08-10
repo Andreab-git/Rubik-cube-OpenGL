@@ -24,6 +24,8 @@
 #else
     #include <GL/glut.h>
     #include <GL/gl.h>
+#include <cstdio>
+
 #endif
 
 
@@ -198,6 +200,8 @@ void draw_func(void) {
 
                 // draw a single cube
                 draw_cube(i, j, k);
+                /* Messo per capire quali sono le coordinate dei vari cubi */
+                printf("i %d , j %d, k %d\n", i, j, k);
 
             }
 
