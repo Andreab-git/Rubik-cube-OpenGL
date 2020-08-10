@@ -10,6 +10,8 @@
 
 
 #include <vector>
+#include <cstdio>
+
 #define GL_SILENCE_DEPRECATION
 
 /* ########################################## */
@@ -24,7 +26,7 @@
 #else
     #include <GL/glut.h>
     #include <GL/gl.h>
-#include <cstdio>
+
 
 #endif
 
