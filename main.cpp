@@ -178,7 +178,7 @@ void draw_cube(int x, int y, int z) {
 } // draw cube function
 
 // draw function
-void draw_func(void) {
+void display(void) {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -209,7 +209,7 @@ void draw_func(void) {
 }
 
 // init rendering parameters
-void init_func(void) {
+void init(void) {
 
     // init parameters
     cube_size = 30.0; // cuboid size
@@ -348,11 +348,13 @@ void keyboard_func(unsigned char key, int x, int y) {
     switch (key) {
 
         case '+':
-            gap += gap_crement;
+            if (angle >= 10) angle -= 5;
+            load_visualization_parameters();
             break;
 
         case '-':
-            gap -= gap_crement;
+            if (angle <= 130) angle += 5;
+            load_visualization_parameters();
             break;
             // vielw rotation
             // INcrement or DEcrement
@@ -468,29 +470,14 @@ void keyboard_func(unsigned char key, int x, int y) {
 
 }
 
-// mouse function callback
-void mouse_func(int button, int state, int x, int y) {
-    if (button == GLUT_LEFT_BUTTON)
-        if (state == GLUT_DOWN) {  // Zoom-in
-            if (angle >= 10) angle -= 5;
-        }
-    if (button == GLUT_RIGHT_BUTTON)
-        if (state == GLUT_DOWN) {  // Zoom-out
-            if (angle <= 130) angle += 5;
-        }
-    load_visualization_parameters();
-    glutPostRedisplay();
-} // mouse function
-
 int main(int argc, char **argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(400, 400);
     glutCreateWindow("Project_Rubik-cube-OpenGL");
-    init_func();
-    glutDisplayFunc(draw_func);
+    init();
+    glutDisplayFunc(display);
     glutReshapeFunc(reshape_func);
-    glutMouseFunc(mouse_func);
     glutKeyboardFunc(keyboard_func);
     glutMainLoop();
 } // main
