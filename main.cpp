@@ -178,7 +178,7 @@ void loadExternalTextures() {
     glGenTextures(12, textureID);
 
     // read the first 6 bitmap images for the Rubik's Cube
-    for (currInd=0; currInd < (NIMAGES - 6); currInd++) {
+    for (currInd=0; currInd < NIMAGES; currInd++) {
         // define parameters for texture[0] (orange face)
         // Bind image to texture object texture[0].
         glBindTexture(GL_TEXTURE_2D, textureID[currInd]);
