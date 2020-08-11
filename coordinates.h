@@ -4,7 +4,6 @@
 GLfloat cube_size = 30.0; // cuboid size
 GLfloat half_cube = cube_size/2;
 
-
 /* ********************************************** RUBIK'S CUBE DATA ************************************************ */
 
 // texture coordinates

@@ -114,22 +114,13 @@ void draw_cube(int x, int y, int z) {
     for (int i = lrot.size() - 1; i >= 0; --i)
         glRotatef(lrot[i].angle, lrot[i].x, lrot[i].y, lrot[i].z);
 
-//    for (indFace=0; indFace<NFACES; indFace++) {
-//        // Activate texture object.
-//        glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
-//        glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-//        // unbind texture
-//        glBindTexture(GL_TEXTURE_2D, 0);
-//    }
-    indFace = 5;
-
-    glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
-    glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-    // unbind texture
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-
-
+    for (indFace=0; indFace<NFACES; indFace++) {
+        // Activate texture object.
+        glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
+        glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
+        // unbind texture
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
 
     glPopMatrix();
 
@@ -200,7 +191,7 @@ void loadExternalTextures() {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         // Specify how texture values combine with current surface color values.
-        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+       glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         // unbind texture
         glBindTexture(GL_TEXTURE_2D, 0);
     }
