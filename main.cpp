@@ -327,26 +327,7 @@ void keyInput(unsigned char key, int x, int y) {
             break;
             // vielw rotation
             // INcrement or DEcrement
-        case 'L': // right
-        case 'l':
-            rot_y = (rot_y - crement) % 360;
-            break;
 
-        case 'J': // left
-        case 'j':
-            rot_y = (rot_y + crement) % 360;
-            break;
-
-        case 'I': // down
-        case 'i':
-            rot_x = (rot_x + crement) % 360;
-            break;
-
-        case 'K': // up
-        case 'k':
-            rot_x = (rot_x - crement) % 360;
-            break;
-            // end of view rotation
 
             // cube movements
 
@@ -436,6 +417,29 @@ void keyInput(unsigned char key, int x, int y) {
     glutPostRedisplay();
 }
 
+void SpecialInput(int key, int x, int y)
+{
+    //view rotation
+    //increment or decrement
+    switch(key)
+    {
+        case GLUT_KEY_UP:
+            rot_x = (rot_x - crement) % 360;
+            break;
+        case GLUT_KEY_DOWN:
+            rot_x = (rot_x + crement) % 360;
+            break;
+        case GLUT_KEY_LEFT:
+            rot_y = (rot_y + crement) % 360;
+            break;
+        case GLUT_KEY_RIGHT:
+            rot_y = (rot_y - crement) % 360;
+            break;
+    }
+
+    glutPostRedisplay();
+}
+
 int main(int argc, char **argv) {
 
     // pass potential input arguments to glutInit
@@ -450,6 +454,7 @@ int main(int argc, char **argv) {
 
     // keyboard handling function
     glutKeyboardFunc(keyInput);
+    glutSpecialFunc(SpecialInput);
 
     // Call initialization routines
     init();
