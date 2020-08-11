@@ -23,8 +23,13 @@ static GLenum textureID[NIMAGES];
 
 GLfloat angle, fAspect;
 GLint rot_x, rot_y, crement, x_0, x_k, y_0, y_k, z_0, z_k, gap;
-//cube_rotate cube_rotations[3][3][3];
 vector<cube_rotate> cube_rotations[3][3][3];
+
+// init lighting
+GLfloat lightAmb[4] = {0.2, 0.2, 0.2, 1.0};
+GLfloat lightDiff[4] = {0.7, 0.7, 0.7, 1.0};        // color
+GLfloat lightSpec[4] = {1.0, 1.0, 1.0, 1.0};    // brightness
+GLfloat lightPos[4] = {0.0, 50.0, 50.0, 1.0};
 
 /* L'ho commentata perche' sembra non servire... scritta cosi' e' solo un prototipo */
 // void view_parameters(void);
@@ -110,26 +115,15 @@ void draw_cube(int x, int y, int z) {
         glRotatef(lrot[i].angle, lrot[i].x, lrot[i].y, lrot[i].z);
 
     for (indFace=0; indFace<NFACES; indFace++) {
-            glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
+        // Activate texture object.
+        glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
+        glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
+        // unbind texture
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-//    glColor3f(1.0f, 0.0f, 0.0f);
-//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//
-//    glColor3f(1.0f, 0.5f, 0.0f);
-//    glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);
-//
-//    glColor3f(0.0f, 0.0f, 1.0f);
-//    glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);
-//
-//    glColor3f(0.0f, 1.0f, 0.0f);
-//    glDrawArrays(GL_TRIANGLE_STRIP, 12, 4);
-//
-//    glColor3f(1.0f, 1.0f, 1.0f);
-//    glDrawArrays(GL_TRIANGLE_STRIP, 16, 4);
-//
-//    glColor3f(1.0f, 1.0f, 0.0f);
-//    glDrawArrays(GL_TRIANGLE_STRIP, 20, 4);
+
+
 
     glPopMatrix();
 
@@ -157,7 +151,7 @@ void display(void) {
                 // draw a single cube
                 draw_cube(i, j, k);
                 /* Messo per capire quali sono le coordinate dei vari cubi */
-              //  printf("i %d , j %d, k %d\n", i, j, k);
+                //  printf("i %d , j %d, k %d\n", i, j, k);
 
             }
 
@@ -171,9 +165,6 @@ void loadExternalTextures() {
     // local variables
     int currInd;
 
-    // initialize texture ID for Rubik's Cube
-    glGenTextures(6, textureID);
-
     // read bitmap image
     for(currInd=0; currInd<NIMAGES; currInd++) {
         // Load external textures
@@ -185,6 +176,9 @@ void loadExternalTextures() {
                    images[currInd]->sizeX, images[currInd]->sizeY);
         }
     }
+
+    // initialize texture ID for Rubik's Cube
+    glGenTextures(12, textureID);
 
     // read the first 6 bitmap images for the Rubik's Cube
     for (currInd=0; currInd < (NIMAGES - 6); currInd++) {
@@ -202,7 +196,7 @@ void loadExternalTextures() {
         // Specify how texture values combine with current surface color values.
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         // unbind texture
-        glBindTexture(GL_TEXTURE_2D, currInd);
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 
 }
@@ -217,13 +211,7 @@ void init(void) {
     crement = 5; // rotation (in/de)crement
     angle = 45;
     gap = 1;        // TODO : DA RIMUOVERE PRIMA O POI
-    // initialize cuboid rotations
 
-    // init lighting
-    GLfloat lightAmb[4] = {0.2, 0.2, 0.2, 1.0};
-    GLfloat lightDiff[4] = {0.7, 0.7, 0.7, 1.0};        // color
-    GLfloat lightSpec[4] = {1.0, 1.0, 1.0, 1.0};    // brightness
-    GLfloat lightPos[4] = {0.0, 50.0, 50.0, 1.0};
 
     // material brightness capacity
     GLfloat specularity[4] = {1.0, 1.0, 1.0, 1.0};
@@ -240,6 +228,9 @@ void init(void) {
     // activate ambient light
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightAmb);
 
+    // Enable local viewpoint.
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+
     // define light parameters
     glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiff);
@@ -247,7 +238,7 @@ void init(void) {
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 //    // enable changing material color    COOOOMMMMEEENNTTTAATTTOOO PER RIMUOVERE IL COLORE
-   glEnable(GL_COLOR_MATERIAL);
+//    glEnable(GL_COLOR_MATERIAL);
 
     // Gouraud colorization model
     glShadeModel(GL_SMOOTH);
@@ -259,6 +250,10 @@ void init(void) {
     glEnable(GL_DEPTH_TEST);
 
     loadExternalTextures();
+
+    // initialize model view transforms
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
 // Set vertex arrays for coordinates, normals and texture coordinates
     glEnableClientState(GL_VERTEX_ARRAY);
