@@ -22,7 +22,7 @@ static struct BitMapFile *images[NIMAGES];
 static GLenum textureID[NIMAGES];
 
 GLfloat angle, fAspect;
-GLint rot_x, rot_y, crement, x_0, x_k, y_0, y_k, z_0, z_k, gap;
+GLint rot_x, rot_y, crement, x_0, x_k, y_0, y_k, z_0, z_k;
 vector<cube_rotate> cube_rotations[3][3][3];
 
 // init lighting
@@ -108,19 +108,25 @@ void draw_cube(int x, int y, int z) {
     glPushMatrix();
 
     // translate to final position
-    glTranslatef((x - 1) * cube_size + x * gap, (y - 1) * cube_size + y * gap, (z - 1) * cube_size + z * gap);
+    glTranslatef((x - 1) * cube_size, (y - 1) * cube_size, (z - 1) * cube_size);
 
     // rotate cube to correct position
     for (int i = lrot.size() - 1; i >= 0; --i)
         glRotatef(lrot[i].angle, lrot[i].x, lrot[i].y, lrot[i].z);
 
-    for (indFace=0; indFace<NFACES; indFace++) {
-        // Activate texture object.
-        glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
-        glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-        // unbind texture
-        glBindTexture(GL_TEXTURE_2D, 0);
-    }
+//    for (indFace=0; indFace<NFACES; indFace++) {
+//        // Activate texture object.
+//        glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
+//        glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
+//        // unbind texture
+//        glBindTexture(GL_TEXTURE_2D, 0);
+//    }
+    indFace = 5;
+
+    glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
+    glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
+    // unbind texture
+    glBindTexture(GL_TEXTURE_2D, 0);
 
 
 
@@ -191,7 +197,7 @@ void loadExternalTextures() {
                      GL_RGBA, GL_UNSIGNED_BYTE, images[currInd]->data);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         // Specify how texture values combine with current surface color values.
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -371,7 +377,6 @@ void init(void) {
     rot_y = 0.0; // view rotation y
     crement = 5; // rotation (in/de)crement
     angle = 45;
-    gap = 1;        // TODO : DA RIMUOVERE PRIMA O POI
 
     makeMenu();
 
