@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <GL/gl.h>
 #include "readBMP.h"
 
@@ -7,7 +7,7 @@
 // 32-bit color RGBA bitmap file (A value being set to 1).
 // Code adapted from :
 // https://github.com/slackmoehrle/Computer-Graphics-Through-OpenGL-2nd/blob/master/Chapter12/LoadTextures/getbmp.cpp
-struct BitMapFile *readBMP(char *filename)
+struct BitMapFile *readBMP(const char *filename)
 {
     GLint offset, headerSize;
     GLuint padding, sizeScanline, sizeStorage;
@@ -16,8 +16,8 @@ struct BitMapFile *readBMP(char *filename)
     struct BitMapFile *bmpRGB, *bmpRGBA;
 
     // Initialize bitmap files for RGB (input) and RGBA (output).
-    bmpRGB = malloc(sizeof(struct BitMapFile));
-    bmpRGBA = malloc(sizeof(struct BitMapFile));
+    bmpRGB = static_cast<BitMapFile *>(malloc(sizeof(struct BitMapFile)));
+    bmpRGBA = static_cast<BitMapFile *>(malloc(sizeof(struct BitMapFile)));
 
     // Read input bmp file name
     infile = fopen(filename, "rb");
@@ -46,7 +46,7 @@ struct BitMapFile *readBMP(char *filename)
 
     // Allocate storage for image in input bitmap file.
     sizeStorage = sizeScanline * bmpRGB->sizeY;
-    bmpRGB->data = malloc(sizeStorage);
+    bmpRGB->data = static_cast<unsigned char *>(malloc(sizeStorage));
 
     // Read bmp file image data into input bitmap file.
     fseek(infile, offset, SEEK_SET);
@@ -66,7 +66,7 @@ struct BitMapFile *readBMP(char *filename)
     // Set image width and height values and allocate storage for image in output bitmap file.
     bmpRGBA->sizeX = bmpRGB->sizeX;
     bmpRGBA->sizeY = bmpRGB->sizeY;
-    bmpRGBA->data = malloc(4*bmpRGB->sizeX*bmpRGB->sizeY);
+    bmpRGBA->data = static_cast<unsigned char *>(malloc(4 * bmpRGB->sizeX * bmpRGB->sizeY));
 
     // Copy RGB data from input to output bitmap files, set output A to 1.
     for(x = 0; x < 4*bmpRGB->sizeY * bmpRGB->sizeX; x+=4) {
