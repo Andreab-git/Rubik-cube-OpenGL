@@ -8,12 +8,9 @@
 /* TODO: CAPIRE A CHE CAZZO SERVE using namespace std; */
 /* TODO: AGGIUNGERE UN MENU CHE SI ATTIVA CON TASTO DESTRO PER CAMBIARE SFONDO? */
 
-
-
 #include "readBMP.h"
 #include "data_path.h"
-
-#define NFACES  6
+#include "main.h"
 
 using namespace std;
 
@@ -21,20 +18,11 @@ struct cube_rotate {
     GLfloat angle, x, y, z;
 };
 
+static struct BitMapFile *images[NIMAGES];
+static GLenum textureID[NIMAGES];
 
-static struct BitMapFile *images[NFACES];
-
-
-
-
-// parameters to bind the textures
-GLenum facePos[NFACES] = {GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
-                          GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
-                          GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z};
-
-
-GLfloat angle, fAspect, cube_size;
-GLint rot_x, rot_y, crement, x_0, x_k, y_0, y_k, z_0, z_k, gap, gap_crement;
+GLfloat angle, fAspect;
+GLint rot_x, rot_y, crement, x_0, x_k, y_0, y_k, z_0, z_k, gap;
 //cube_rotate cube_rotations[3][3][3];
 vector<cube_rotate> cube_rotations[3][3][3];
 
@@ -199,7 +187,7 @@ void display(void) {
                 // draw a single cube
                 draw_cube(i, j, k);
                 /* Messo per capire quali sono le coordinate dei vari cubi */
-                printf("i %d , j %d, k %d\n", i, j, k);
+              //  printf("i %d , j %d, k %d\n", i, j, k);
 
             }
 
@@ -208,75 +196,16 @@ void display(void) {
 
 }
 
-// init rendering parameters
-void init(void) {
-
-    // init parameters
-    cube_size = 30.0; // cuboid size
-    rot_x = 0.0; // view rotation x
-    rot_y = 0.0; // view rotation y
-    crement = 5; // rotation (in/de)crement
-    gap = 1;
-    gap_crement = 3;
-    // initialize cuboid rotations
-
-    // init lighting
-    GLfloat ambient_lighte[4] = {0.2, 0.2, 0.2, 1.0};
-    GLfloat diffuse_light[4] = {0.7, 0.7, 0.7, 1.0};        // color
-    GLfloat specular_light[4] = {1.0, 1.0, 1.0, 1.0};    // brightness
-    GLfloat light_position[4] = {0.0, 50.0, 50.0, 1.0};
-
-    // material brightness capacity
-    GLfloat specularity[4] = {1.0, 1.0, 1.0, 1.0};
-    GLint material_specularity = 60;
-
-    // black background
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-    // Gouraud colorization model
-    glShadeModel(GL_SMOOTH);
-
-    // material reflectability
-    glMaterialfv(GL_FRONT, GL_SPECULAR, specularity);
-    // brightness concentration
-    glMateriali(GL_FRONT, GL_SHININESS, material_specularity);
-
-    // activate ambient light
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient_lighte);
-
-    // define light parameters
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient_lighte);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, specular_light);
-    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
-    // enable changing material color
-    glEnable(GL_COLOR_MATERIAL);
-    // enable lighting
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    // enable depth buffering
-    glEnable(GL_DEPTH_TEST);
-
-    angle = 45;
-
-
-
-
-    /* PER LEGGERE IMMAGINI */
-    /*
-     *
-     *
-     *
-     *
-     *
-     *
-     * */
+void loadExternalTextures() {
 
     // local variables
     int currInd;
 
-    for(currInd=0; currInd<NFACES; currInd++) {
+    // initialize texture ID for Rubik's Cube
+    glGenTextures(6, textureID);
+
+    // read bitmap image
+    for(currInd=0; currInd<NIMAGES; currInd++) {
         // Load external textures
         images[currInd] = readBMP(fileName[currInd]);
         if(images[currInd] == NULL) {
@@ -285,40 +214,109 @@ void init(void) {
             printf("Loaded image %s - %d x %d pixels \n", fileName[currInd],
                    images[currInd]->sizeX, images[currInd]->sizeY);
         }
-
-        // generate textures
-        glTexImage2D(facePos[currInd], 0, GL_RGBA, images[currInd]->sizeX,
-                     images[currInd]->sizeY, 0, GL_RGBA, GL_UNSIGNED_BYTE, images[currInd]->data);
-
     }
 
+    // read the first 6 bitmap images for the Rubik's Cube
+    for (currInd=0; currInd < (NIMAGES - 6); currInd++) {
+        // define parameters for texture[0] (orange face)
+        // Bind image to texture object texture[0].
+        glBindTexture(GL_TEXTURE_2D, textureID[currInd]);
+        // Turn on OpenGL texture unit
+        glEnable(GL_TEXTURE_2D);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, images[currInd]->sizeX, images[currInd]->sizeY, 0,
+                     GL_RGBA, GL_UNSIGNED_BYTE, images[currInd]->data);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        // Specify how texture values combine with current surface color values.
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+        // unbind texture
+        glBindTexture(GL_TEXTURE_2D, currInd);
+    }
 
+}
 
-    /* FINE LEGGERE IMMAGINI */
-    /*
-     *
-     *
-     *
-     *
-     *
-     *
-     * */
+// init rendering parameters
+void init(void) {
 
+    // init parameters
 
+    rot_x = 0.0; // view rotation x
+    rot_y = 0.0; // view rotation y
+    crement = 5; // rotation (in/de)crement
+    angle = 45;
+    gap = 1;        // TODO : DA RIMUOVERE PRIMA O POI
+    // initialize cuboid rotations
 
+    // init lighting
+    GLfloat lightAmb[4] = {0.2, 0.2, 0.2, 1.0};
+    GLfloat lightDiff[4] = {0.7, 0.7, 0.7, 1.0};        // color
+    GLfloat lightSpec[4] = {1.0, 1.0, 1.0, 1.0};    // brightness
+    GLfloat lightPos[4] = {0.0, 50.0, 50.0, 1.0};
 
+    // material brightness capacity
+    GLfloat specularity[4] = {1.0, 1.0, 1.0, 1.0};
+    GLint material_specularity = 60;
 
+    // black background
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+    // material reflectability
+    glMaterialfv(GL_FRONT, GL_SPECULAR, specularity);
+    // brightness concentration
+    glMateriali(GL_FRONT, GL_SHININESS, material_specularity);
+
+    // activate ambient light
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightAmb);
+
+    // define light parameters
+    glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmb);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiff);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
+//    // enable changing material color    COOOOMMMMEEENNTTTAATTTOOO PER RIMUOVERE IL COLORE
+//    glEnable(GL_COLOR_MATERIAL);
+
+    // Gouraud colorization model
+    glShadeModel(GL_SMOOTH);
+
+    // enable lighting
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    // enable depth buffering
+    glEnable(GL_DEPTH_TEST);
+
+    loadExternalTextures();
+
+// Set vertex arrays for coordinates, normals and texture coordinates
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, vertexCoords);
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glNormalPointer(GL_FLOAT, 0, tNormals);
+    // Activate client state for texturing
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glTexCoordPointer(2, GL_FLOAT, 0, textCoords);
 
 } // init
 
 // specify what's shown in the window
 void view_parameters(void) {
+    GLenum glErr;
+
     // specify projection coordinate system
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
     // specify projection perspective
     gluPerspective(angle, fAspect, 0.4, 500);
+
+    // ... it does not hurt to check that everything went well
+    if ((glErr=glGetError()) != 0) {
+        printf("Errore = %d \n", glErr);
+        exit(-1);
+    }
 
     // init model coordinate system
     glMatrixMode(GL_MODELVIEW);
@@ -347,6 +345,12 @@ void keyInput(unsigned char key, int x, int y) {
 
     switch (key) {
 
+        case 27:
+            // free allocated memory
+            for (int i=0; i<NIMAGES; i++)
+                free(images[i]->data);
+            // ESC
+            exit(0);
         case '+':
             if (angle >= 10) angle -= 5;
             view_parameters();
@@ -458,26 +462,35 @@ void keyInput(unsigned char key, int x, int y) {
         case 'o':
             update_rotation(90);
             break;
-
             // end of cube movements
 
         default:
             break;
-
     }
 
     glutPostRedisplay();
-
 }
 
 int main(int argc, char **argv) {
+
+    // pass potential input arguments to glutInit
     glutInit(&argc, argv);
+
+    // set display mode
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+
+
     glutInitWindowSize(400, 400);
     glutCreateWindow("Project_Rubik-cube-OpenGL");
+
+    // keyboard handling function
+    glutKeyboardFunc(keyInput);
+
+    // Call initialization routines
     init();
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
-    glutKeyboardFunc(keyInput);
     glutMainLoop();
+
+    return 0; /* ANSI C requires main to return int. */
 } // main
