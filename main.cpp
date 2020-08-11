@@ -9,34 +9,33 @@
 /* TODO: AGGIUNGERE UN MENU CHE SI ATTIVA CON TASTO DESTRO PER CAMBIARE SFONDO? */
 
 
+#include "readBMP.h"
 
-#include <vector>
-#include <cstdio>
-
-#define GL_SILENCE_DEPRECATION
-
-/* ########################################## */
-/* Scommentare per impostare librerie macos */
-
-// #define APPLE
-
-/* ########################################## */
-
-#ifdef APPLE
-#include <GLUT/glut.h>
-#else
-    #include <GL/glut.h>
-    #include <GL/gl.h>
-
-
-#endif
-
+#define NFACES  6
 
 using namespace std;
 
 struct cube_rotate {
     GLfloat angle, x, y, z;
 };
+
+
+static struct BitMapFile *images[NFACES];
+
+// file containing the bmp image
+const char *fileName[NFACES] = {"/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/arancio.bmp",
+                          "/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/azzurro.bmp",
+                          "/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/bianco.bmp",
+                          "/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/giallo.bmp",
+                          "/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/rosso.bmp",
+                          "/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/verde.bmp"};
+
+
+// parameters to bind the textures
+GLenum facePos[NFACES] = {GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+                          GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+                          GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z};
+
 
 GLfloat angle, fAspect, cube_size;
 GLint rot_x, rot_y, crement, x_0, x_k, y_0, y_k, z_0, z_k, gap, gap_crement;
@@ -221,7 +220,7 @@ void init_func(void) {
     rot_x = 0.0; // view rotation x
     rot_y = 0.0; // view rotation y
     crement = 5; // rotation (in/de)crement
-    gap = 2;
+    gap = 1;
     gap_crement = 3;
     // initialize cuboid rotations
 
@@ -264,6 +263,55 @@ void init_func(void) {
     glEnable(GL_DEPTH_TEST);
 
     angle = 45;
+
+
+
+
+    /* PER LEGGERE IMMAGINI */
+    /*
+     *
+     *
+     *
+     *
+     *
+     *
+     * */
+
+    // local variables
+    int currInd;
+
+    for(currInd=0; currInd<NFACES; currInd++) {
+        // Load external textures
+        images[currInd] = readBMP(fileName[currInd]);
+        if(images[currInd] == NULL) {
+            printf("Could not open file %s\n", fileName[currInd]);
+        } else {
+            printf("Loaded image %s - %d x %d pixels \n", fileName[currInd],
+                   images[currInd]->sizeX, images[currInd]->sizeY);
+        }
+
+        // generate textures
+        glTexImage2D(facePos[currInd], 0, GL_RGBA, images[currInd]->sizeX,
+                     images[currInd]->sizeY, 0, GL_RGBA, GL_UNSIGNED_BYTE, images[currInd]->data);
+
+    }
+
+
+
+    /* FINE LEGGERE IMMAGINI */
+    /*
+     *
+     *
+     *
+     *
+     *
+     *
+     * */
+
+
+
+
+
 
 } // init
 
@@ -310,7 +358,7 @@ void keyboard_func(unsigned char key, int x, int y) {
         case '-':
             gap -= gap_crement;
             break;
-            // view rotation
+            // vielw rotation
             // INcrement or DEcrement
         case 'L': // right
         case 'l':
