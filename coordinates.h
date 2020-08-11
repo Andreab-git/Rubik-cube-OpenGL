@@ -55,8 +55,6 @@ GLfloat vertexCoords[NFACES*NVERTICES*3] =
                 -half_cube, -half_cube, half_cube,
                 half_cube, -half_cube, half_cube,
 
-
-
         };
 
 // normals

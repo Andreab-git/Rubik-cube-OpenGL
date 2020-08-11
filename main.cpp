@@ -191,7 +191,7 @@ void loadExternalTextures() {
                      GL_RGBA, GL_UNSIGNED_BYTE, images[currInd]->data);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         // Specify how texture values combine with current surface color values.
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -371,7 +371,7 @@ void init(void) {
     rot_y = 0.0; // view rotation y
     crement = 5; // rotation (in/de)crement
     angle = 45;
-    gap = 5;        // TODO : DA RIMUOVERE PRIMA O POI
+    gap = 1;        // TODO : DA RIMUOVERE PRIMA O POI
 
     makeMenu();
 
