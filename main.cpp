@@ -202,6 +202,167 @@ void loadExternalTextures() {
 
 }
 
+// specify what's shown in the window
+void view_parameters(void) {
+    GLenum glErr;
+
+    // specify projection coordinate system
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    // specify projection perspective
+    gluPerspective(angle, fAspect, 0.4, 500);
+
+    // ... it does not hurt to check that everything went well
+    if ((glErr=glGetError()) != 0) {
+        printf("Errore = %d \n", glErr);
+        exit(-1);
+    }
+
+    // init model coordinate system
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    // specify observer and target positions
+    camera_opt();
+} // load visualization parameters
+
+//parte menu
+void top_menu(int id)
+{
+    // Exit if the user selected the "quit" option
+    if (id == 1) exit(0);
+}
+
+void game_manual(int id)
+{
+    switch (id) {
+        case '+':
+            if (angle >= 10) angle -= 5;
+            view_parameters();
+            break;
+
+        case '-':
+            if (angle <= 130) angle += 5;
+            view_parameters();
+            break;
+
+            // cube movements
+
+            // select cube face
+            // x-axis faces
+        case 'Q':
+        case 'q':
+            reset_selected_face();
+            x_0 = 0;
+            x_k = 0;
+            break;
+
+        case 'W':
+        case 'w':
+            reset_selected_face();
+            x_0 = 1;
+            x_k = 1;
+            break;
+
+        case 'E':
+        case 'e':
+            reset_selected_face();
+            x_0 = 2;
+            x_k = 2;
+            break;
+
+            // y-axis faces
+        case 'A':
+        case 'a':
+            reset_selected_face();
+            y_0 = 0;
+            y_k = 0;
+            break;
+
+        case 'S':
+        case 's':
+            reset_selected_face();
+            y_0 = 1;
+            y_k = 1;
+            break;
+
+        case 'D':
+        case 'd':
+            reset_selected_face();
+            y_0 = 2;
+            y_k = 2;
+            break;
+
+            // z-axis faces
+        case 'C':
+        case 'c':
+            reset_selected_face();
+            z_0 = 0;
+            z_k = 0;
+            break;
+
+        case 'X':
+        case 'x':
+            reset_selected_face();
+            z_0 = 1;
+            z_k = 1;
+            break;
+
+        case 'Z':
+        case 'z':
+            reset_selected_face();
+            z_0 = 2;
+            z_k = 2;
+            break;
+
+            // move selected face
+        case 'U': // counter-clockwise
+        case 'u':
+            update_rotation(-90);
+            break;
+
+        case 'O': // clockwise
+        case 'o':
+            update_rotation(90);
+            break;
+    }
+    glutPostRedisplay();
+}
+
+// Menu
+void makeMenu(void)
+{
+    // The sub-menu is created first (because it should be
+    // visible when the top menu is created)
+    int sub_menu;
+
+    sub_menu = glutCreateMenu(game_manual);
+    glutAddMenuEntry("avvicina il cubo --- > +", '+');
+    glutAddMenuEntry("allontana il cubo --- > -", '-');
+    glutAddMenuEntry("sposta prima colonna --- > q", 'q');
+    glutAddMenuEntry("sposta seconda colonna --- > w", 'w');
+    glutAddMenuEntry("sposta terza colonna --- > e", 'e');
+    glutAddMenuEntry("sposta prima riga --- > a", 'a');
+    glutAddMenuEntry("sposta seconda riga --- > s", 's');
+    glutAddMenuEntry("sposta terza riga --- > d", 'd');
+    //glutAddMenuEntry("lungo l'asse z, in basso --- > ", 'c');
+    //glutAddMenuEntry("lungo l'asse z, in mezzo --- > ", 'x');
+    //glutAddMenuEntry("lungo l'asse z, in alto --- > ", 'z');
+    //non so come scrivere quelli per z
+    glutAddMenuEntry("sposta verso sinistra --- > u", 'u');
+    glutAddMenuEntry("sposta verso destra --- > o", 'o');
+
+    // The top menu is created: its callback function is
+    // registered and menu entries, including a submenu, added.
+    glutCreateMenu(top_menu);
+    glutAddSubMenu("Comandi", sub_menu);
+    glutAddMenuEntry("Quit",1);
+
+    // The menu is attached to a mouse button.
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
+
 // init rendering parameters
 void init(void) {
 
@@ -213,6 +374,7 @@ void init(void) {
     angle = 45;
     gap = 1;        // TODO : DA RIMUOVERE PRIMA O POI
 
+    makeMenu();
 
     // material brightness capacity
     GLfloat specularity[4] = {1.0, 1.0, 1.0, 1.0};
@@ -266,31 +428,6 @@ void init(void) {
     glTexCoordPointer(2, GL_FLOAT, 0, textCoords);
 
 } // init
-
-// specify what's shown in the window
-void view_parameters(void) {
-    GLenum glErr;
-
-    // specify projection coordinate system
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    // specify projection perspective
-    gluPerspective(angle, fAspect, 0.4, 500);
-
-    // ... it does not hurt to check that everything went well
-    if ((glErr=glGetError()) != 0) {
-        printf("Errore = %d \n", glErr);
-        exit(-1);
-    }
-
-    // init model coordinate system
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    // specify observer and target positions
-    camera_opt();
-} // load visualization parameters
 
 // window reshape callback
 void reshape(GLsizei w, GLsizei h) {
