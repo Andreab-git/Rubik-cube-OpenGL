@@ -6,7 +6,6 @@
 /* TODO: TROVARE UN RIMPIAZZO A vector OPPURE CAPIRE COSA FA DI PRECISO */
 /* TODO: METTERE UNA TEXTURE DI SFONDO PER RENDERLO PIU' CARINO */
 /* TODO: CAPIRE A CHE CAZZO SERVE using namespace std; */
-/* TODO: AGGIUNGERE UN MENU CHE SI ATTIVA CON TASTO DESTRO PER CAMBIARE SFONDO? */
 
 #include "readBMP.h"
 #include "data_path.h"
@@ -372,7 +371,7 @@ void init(void) {
     rot_y = 0.0; // view rotation y
     crement = 5; // rotation (in/de)crement
     angle = 45;
-    gap = 1;        // TODO : DA RIMUOVERE PRIMA O POI
+    gap = 5;        // TODO : DA RIMUOVERE PRIMA O POI
 
     makeMenu();
 
