@@ -96,6 +96,8 @@ void camera_opt() {
 // draw a cube
 void draw_cube(int x, int y, int z) {
 
+    unsigned int indFace;
+
     vector<cube_rotate> lrot = cube_rotations[x][y][z];
 
     glPushMatrix();
@@ -107,59 +109,27 @@ void draw_cube(int x, int y, int z) {
     for (int i = lrot.size() - 1; i >= 0; --i)
         glRotatef(lrot[i].angle, lrot[i].x, lrot[i].y, lrot[i].z);
 
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glBegin(GL_QUADS);  // front
-    glNormal3f(0.0, 0.0, 1.0);  // face normal
-    glVertex3f(cube_size / 2, cube_size / 2, cube_size / 2);
-    glVertex3f(-cube_size / 2, cube_size / 2, cube_size / 2);
-    glVertex3f(-cube_size / 2, -cube_size / 2, cube_size / 2);
-    glVertex3f(cube_size / 2, -cube_size / 2, cube_size / 2);
-    glEnd();
+    for (indFace=0; indFace<NFACES; indFace++) {
+            glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
+    }
 
-    glColor3f(1.0f, 0.5f, 0.0f);
-    glBegin(GL_QUADS);  // back
-    glNormal3f(0.0, 0.0, -1.0);  // face normal
-    glVertex3f(cube_size / 2, cube_size / 2, -cube_size / 2);
-    glVertex3f(cube_size / 2, -cube_size / 2, -cube_size / 2);
-    glVertex3f(-cube_size / 2, -cube_size / 2, -cube_size / 2);
-    glVertex3f(-cube_size / 2, cube_size / 2, -cube_size / 2);
-    glEnd();
-
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glBegin(GL_QUADS);  // left
-    glNormal3f(-1.0, 0.0, 0.0);  // face normal
-    glVertex3f(-cube_size / 2, cube_size / 2, cube_size / 2);
-    glVertex3f(-cube_size / 2, cube_size / 2, -cube_size / 2);
-    glVertex3f(-cube_size / 2, -cube_size / 2, -cube_size / 2);
-    glVertex3f(-cube_size / 2, -cube_size / 2, cube_size / 2);
-    glEnd();
-
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glBegin(GL_QUADS);  // right
-    glNormal3f(1.0, 0.0, 0.0);  // face normal
-    glVertex3f(cube_size / 2, cube_size / 2, cube_size / 2);
-    glVertex3f(cube_size / 2, -cube_size / 2, cube_size / 2);
-    glVertex3f(cube_size / 2, -cube_size / 2, -cube_size / 2);
-    glVertex3f(cube_size / 2, cube_size / 2, -cube_size / 2);
-    glEnd();
-
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glBegin(GL_QUADS);  // top
-    glNormal3f(0.0, 1.0, 0.0);  // face normal
-    glVertex3f(-cube_size / 2, cube_size / 2, -cube_size / 2);
-    glVertex3f(-cube_size / 2, cube_size / 2, cube_size / 2);
-    glVertex3f(cube_size / 2, cube_size / 2, cube_size / 2);
-    glVertex3f(cube_size / 2, cube_size / 2, -cube_size / 2);
-    glEnd();
-
-    glColor3f(1.0f, 1.0f, 0.0f);
-    glBegin(GL_QUADS);  // bottom
-    glNormal3f(0.0, -1.0, 0.0);  // face normal
-    glVertex3f(-cube_size / 2, -cube_size / 2, -cube_size / 2);
-    glVertex3f(cube_size / 2, -cube_size / 2, -cube_size / 2);
-    glVertex3f(cube_size / 2, -cube_size / 2, cube_size / 2);
-    glVertex3f(-cube_size / 2, -cube_size / 2, cube_size / 2);
-    glEnd();
+//    glColor3f(1.0f, 0.0f, 0.0f);
+//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+//
+//    glColor3f(1.0f, 0.5f, 0.0f);
+//    glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);
+//
+//    glColor3f(0.0f, 0.0f, 1.0f);
+//    glDrawArrays(GL_TRIANGLE_STRIP, 8, 4);
+//
+//    glColor3f(0.0f, 1.0f, 0.0f);
+//    glDrawArrays(GL_TRIANGLE_STRIP, 12, 4);
+//
+//    glColor3f(1.0f, 1.0f, 1.0f);
+//    glDrawArrays(GL_TRIANGLE_STRIP, 16, 4);
+//
+//    glColor3f(1.0f, 1.0f, 0.0f);
+//    glDrawArrays(GL_TRIANGLE_STRIP, 20, 4);
 
     glPopMatrix();
 
@@ -277,7 +247,7 @@ void init(void) {
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 //    // enable changing material color    COOOOMMMMEEENNTTTAATTTOOO PER RIMUOVERE IL COLORE
-//    glEnable(GL_COLOR_MATERIAL);
+   glEnable(GL_COLOR_MATERIAL);
 
     // Gouraud colorization model
     glShadeModel(GL_SMOOTH);
