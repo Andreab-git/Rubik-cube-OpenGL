@@ -11,6 +11,7 @@
 
 
 #include "readBMP.h"
+#include "data_path.h"
 
 #define NFACES  6
 
@@ -23,13 +24,7 @@ struct cube_rotate {
 
 static struct BitMapFile *images[NFACES];
 
-// file containing the bmp image
-const char *fileName[NFACES] = {"/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/arancio.bmp",
-                                "/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/azzurro.bmp",
-                                "/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/bianco.bmp",
-                                "/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/giallo.bmp",
-                                "/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/rosso.bmp",
-                                "/home/andrea/CLionProjects/Rubik-Cube-OpenGL/textures/verde.bmp"};
+
 
 
 // parameters to bind the textures
