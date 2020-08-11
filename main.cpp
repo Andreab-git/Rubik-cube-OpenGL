@@ -39,9 +39,9 @@ GLint rot_x, rot_y, crement, x_0, x_k, y_0, y_k, z_0, z_k, gap, gap_crement;
 vector<cube_rotate> cube_rotations[3][3][3];
 
 /* L'ho commentata perche' sembra non servire... scritta cosi' e' solo un prototipo */
-// void load_visualization_parameters(void);
+// void view_parameters(void);
 
-void apply_rotation(GLfloat angle) {
+void update_rotation(GLfloat angle) {
 
     vector<cube_rotate> face[3][3];
     int index;
@@ -101,7 +101,7 @@ void reset_selected_face() {
 
 }
 
-void set_camera() {
+void camera_opt() {
     gluLookAt(0, 80, 200, 0, 0, 0, 0, 1, 0);
 }
 
@@ -186,7 +186,7 @@ void display(void) {
     glLoadIdentity();
 
     // set camera position
-    set_camera();
+    camera_opt();
 
     // apply visualization transformations
     glRotatef(rot_x, 1.0, 0.0, 0.0); // rotate in y axis
@@ -312,7 +312,7 @@ void init(void) {
 } // init
 
 // specify what's shown in the window
-void load_visualization_parameters(void) {
+void view_parameters(void) {
     // specify projection coordinate system
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -325,11 +325,11 @@ void load_visualization_parameters(void) {
     glLoadIdentity();
 
     // specify observer and target positions
-    set_camera();
+    camera_opt();
 } // load visualization parameters
 
 // window reshape callback
-void reshape_func(GLsizei w, GLsizei h) {
+void reshape(GLsizei w, GLsizei h) {
     // prevents division by zero
     if (h == 0) h = 1;
 
@@ -339,22 +339,22 @@ void reshape_func(GLsizei w, GLsizei h) {
     // aspect ratio
     fAspect = (GLfloat) w / (GLfloat) h;
 
-    load_visualization_parameters();
+    view_parameters();
 } // reshape function
 
 // keyboard function callback
-void keyboard_func(unsigned char key, int x, int y) {
+void keyInput(unsigned char key, int x, int y) {
 
     switch (key) {
 
         case '+':
             if (angle >= 10) angle -= 5;
-            load_visualization_parameters();
+            view_parameters();
             break;
 
         case '-':
             if (angle <= 130) angle += 5;
-            load_visualization_parameters();
+            view_parameters();
             break;
             // vielw rotation
             // INcrement or DEcrement
@@ -451,12 +451,12 @@ void keyboard_func(unsigned char key, int x, int y) {
             // move selected face
         case 'U': // counter-clockwise
         case 'u':
-            apply_rotation(-90);
+            update_rotation(-90);
             break;
 
         case 'O': // clockwise
         case 'o':
-            apply_rotation(90);
+            update_rotation(90);
             break;
 
             // end of cube movements
@@ -477,7 +477,7 @@ int main(int argc, char **argv) {
     glutCreateWindow("Project_Rubik-cube-OpenGL");
     init();
     glutDisplayFunc(display);
-    glutReshapeFunc(reshape_func);
-    glutKeyboardFunc(keyboard_func);
+    glutReshapeFunc(reshape);
+    glutKeyboardFunc(keyInput);
     glutMainLoop();
 } // main
