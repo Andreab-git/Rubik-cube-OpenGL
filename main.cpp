@@ -22,7 +22,7 @@ static struct BitMapFile *images[NIMAGES];
 static GLenum textureID[NIMAGES];
 
 GLfloat angle, fAspect;
-GLint rot_x, rot_y, crement, x_0, x_k, y_0, y_k, z_0, z_k;
+GLint rot_x, rot_y, crement, x_0 = 0, x_k = 0, y_0 = 0, y_k = 2, z_0 = 0, z_k = 2;
 vector<cube_rotate> cube_rotations[3][3][3];
 
 // init lighting
@@ -231,6 +231,8 @@ void top_menu(int id)
     if (id == 1) exit(0);
 }
 
+
+// TODO: Rimuovere i comandi e lasciare solo al descrizione?
 void game_manual(int id)
 {
     switch (id) {
