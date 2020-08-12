@@ -26,10 +26,10 @@ GLint rot_x, rot_y, crement, x_0, x_k, y_0, y_k, z_0, z_k;
 vector<cube_rotate> cube_rotations[3][3][3];
 
 // init lighting
-GLfloat lightAmb[4] = {0.2, 0.2, 0.2, 1.0};
-GLfloat lightDiff[4] = {0.7, 0.7, 0.7, 1.0};        // color
+GLfloat lightAmb[4] = {0.5, 0.5, 0.5, 1.0};
+GLfloat lightDiff[4] = {0.8, 0.8, 0.8, 1.0};        // color
 GLfloat lightSpec[4] = {1.0, 1.0, 1.0, 1.0};    // brightness
-GLfloat lightPos[4] = {0.0, 50.0, 50.0, 1.0};
+GLfloat lightPos[4] = {0.0, 150.0, 50.0, 1.0};
 
 /* L'ho commentata perche' sembra non servire... scritta cosi' e' solo un prototipo */
 // void view_parameters(void);
