@@ -197,7 +197,6 @@ void display(void) {
 
     // flush opengl commands
     glutSwapBuffers();
-
 }
 
 void loadExternalTextures() {
@@ -221,7 +220,7 @@ void loadExternalTextures() {
     glGenTextures(NIMAGES, textureID);
 
     // read the first 6 bitmap images for the Rubik's Cube
-    for (currInd=0; currInd < NIMAGES; currInd++) {
+    for (currInd=0; currInd < NIMAGES ; currInd++) {
         // define parameters for texture[0] (orange face)
         // Bind image to texture object texture[0].
         glBindTexture(GL_TEXTURE_2D, textureID[currInd]);
@@ -454,7 +453,6 @@ void init(void) {
     glEnable(GL_DEPTH_TEST);
 
     loadExternalTextures();
-
     // initialize model view transforms
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -467,7 +465,6 @@ void init(void) {
     // Activate client state for texturing
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glTexCoordPointer(2, GL_FLOAT, 0, textCoords);
-
 } // init
 
 // window reshape callback
