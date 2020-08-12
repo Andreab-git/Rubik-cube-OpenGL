@@ -7,8 +7,33 @@ GLfloat half_cube = cube_size/2;
 /* ********************************************** RUBIK'S CUBE DATA ************************************************ */
 
 // texture coordinates
-GLfloat textCoords[4*2] =
+GLfloat textCoords[6*4*2] =
         {
+                0.0, 0.0,
+                1.0, 0.0,
+                0.0, 1.0,
+                1.0, 1.0,
+
+                0.0, 0.0,
+                1.0, 0.0,
+                0.0, 1.0,
+                1.0, 1.0,
+
+                0.0, 0.0,
+                1.0, 0.0,
+                0.0, 1.0,
+                1.0, 1.0,
+
+                0.0, 0.0,
+                1.0, 0.0,
+                0.0, 1.0,
+                1.0, 1.0,
+
+                0.0, 0.0,
+                1.0, 0.0,
+                0.0, 1.0,
+                1.0, 1.0,
+
                 0.0, 0.0,
                 1.0, 0.0,
                 0.0, 1.0,
@@ -16,45 +41,42 @@ GLfloat textCoords[4*2] =
         };
 
 // vertex coordinates
-GLfloat vertexCoords[NFACES*NVERTICES*3] =
-        {
-                /* red face (front) */
-                half_cube, half_cube, half_cube,
-                -half_cube, half_cube, half_cube,
-                half_cube, -half_cube, half_cube,
-                -half_cube, -half_cube, half_cube,
+GLfloat vertexCoords[NFACES * NVERTICES * 3] = {
+        /* red face (front) */
+        -half_cube, -half_cube, half_cube,
+        half_cube, -half_cube, half_cube,
+        -half_cube, half_cube, half_cube,
+        half_cube, half_cube, half_cube,
 
-                /* blue face (left) */
-                -half_cube, half_cube, half_cube,
-                -half_cube, half_cube, -half_cube,
-                -half_cube, -half_cube, half_cube,
-                -half_cube, -half_cube, -half_cube,
+        /* blue face (left) */
+        -half_cube, -half_cube, half_cube,
+        -half_cube, half_cube, half_cube,
+        -half_cube, -half_cube, -half_cube,
+        -half_cube, half_cube, -half_cube,
 
-                /* orange face (back)*/
-                half_cube, half_cube, -half_cube,
-                half_cube, -half_cube, -half_cube,
-                -half_cube, half_cube, -half_cube,
-                -half_cube, -half_cube, -half_cube,
+        /* orange face (back)*/
+        -half_cube, -half_cube, -half_cube,
+        half_cube, -half_cube, -half_cube,
+        -half_cube, half_cube, -half_cube,
+        half_cube, half_cube, -half_cube,
 
-                /* green face (right) */
-                half_cube, half_cube, half_cube,
-                half_cube, -half_cube, half_cube,
-                half_cube, half_cube, -half_cube,
-                half_cube, -half_cube, -half_cube,
+        /* green face (right) */
+        half_cube, -half_cube, half_cube,
+        half_cube, -half_cube, -half_cube,
+        half_cube, half_cube, half_cube,
+        half_cube, half_cube, -half_cube,
 
-                /* white face (top) */
-                -half_cube, half_cube, -half_cube,
-                -half_cube, half_cube, half_cube,
-                half_cube, half_cube, -half_cube,
-                half_cube, half_cube, half_cube,
+        /* white face (top) */
+        -half_cube, half_cube, half_cube,
+        half_cube, half_cube, half_cube,
+        -half_cube, half_cube, -half_cube,
+        half_cube, half_cube, -half_cube,
 
-                /* yellow face (bottom) */
-                -half_cube, -half_cube, -half_cube,
-                half_cube, -half_cube, -half_cube,
-                -half_cube, -half_cube, half_cube,
-                half_cube, -half_cube, half_cube,
-
-        };
+        /* yellow face (bottom) */
+        -half_cube, -half_cube, half_cube,
+        half_cube, -half_cube, half_cube,
+        -half_cube, -half_cube, -half_cube,
+        half_cube, -half_cube, -half_cube};
 
 // normals
 GLfloat tNormals[NFACES*NVERTICES*3] =
