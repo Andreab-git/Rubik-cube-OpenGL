@@ -115,6 +115,49 @@ void draw_cube(int x, int y, int z) {
         glRotatef(lrot[i].angle, lrot[i].x, lrot[i].y, lrot[i].z);
 
     for (indFace=0; indFace<NFACES; indFace++) {
+
+        // caso x_0 = 0 quindi prima colonna selezionata
+        // se (x == x_0 &&  x_k == 0) && (indFace == 1 || indFace == 3 || indFace == 5 || indFace == 6)
+
+
+        // caso x_0 = 1 quindi seconda colonna selezionata
+        // se (x == x_0 &&  x_k == 1) && (indFace == 1 || indFace == 3 || indFace == 5 || indFace == 6)
+
+
+        // caso x_0 = 2 quindi terza colonna selezionata
+        // se (x == x_0 &&  x_k == 2) && (indFace == 1 || indFace == 3 || indFace == 5 || indFace == 6)
+
+
+
+        // caso y_0 = 0 quindi prima riga selezionata
+        // se (y == y_0 &&  y_k == 0) && (indFace == 1 || indFace == 3 || indFace == 5 || indFace == 6)
+
+
+        // caso y_0 = 1 quindi seconda riga selezionata
+        // se (y == y_0 &&  y_k == 1) && (indFace == 1 || indFace == 3 || indFace == 5 || indFace == 6)
+
+
+        // caso y_0 = 2 quindi terza riga selezionata
+        // se (y == y_0 &&  y_k == 2) && (indFace == 1 || indFace == 3 || indFace == 5 || indFace == 6)
+
+
+
+        // caso z_0 = 0 quindi prima colonna selezionata verso z
+        // se (z == y_0 &&  z_k == 0) && (indFace == 1 || indFace == 3 || indFace == 5 || indFace == 6)
+
+
+        // caso z_0 = 1 quindi seconda colonna selezionata verso z
+        // se (z == y_0 &&  z_k == 1) && (indFace == 1 || indFace == 3 || indFace == 5 || indFace == 6)
+
+
+        // caso z_0 = 2 quindi terza colonna selezionata verso z
+        // se (z == z_0 &&  z_k == 2) && (indFace == 1 || indFace == 3 || indFace == 5 || indFace == 6)
+
+
+
+
+        // caso in cui si disegna normalmente senza texture particolari
+
         // Activate texture object.
         glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
         glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
@@ -175,7 +218,7 @@ void loadExternalTextures() {
     }
 
     // initialize texture ID for Rubik's Cube
-    glGenTextures(12, textureID);
+    glGenTextures(NIMAGES, textureID);
 
     // read the first 6 bitmap images for the Rubik's Cube
     for (currInd=0; currInd < NIMAGES; currInd++) {
