@@ -20,12 +20,12 @@ vector<cube_rotate> cube_rotations[3][3][3];
 
 // init lighting
 GLfloat lightAmb[4] = {0.5, 0.5, 0.5, 1.0};
-GLfloat lightDiff[4] = {0.8, 0.8, 0.8, 1.0};        // color
-GLfloat lightSpec[4] = {1.0, 1.0, 1.0, 1.0};        // brightness
+GLfloat lightDiff[4] = {0.8, 0.8, 0.8, 1.0};
+GLfloat lightSpec[4] = {1.0, 1.0, 1.0, 1.0};
 GLfloat lightPos[4] = {0.0, 150.0, 50.0, 1.0};
 
-void update_rotation(GLfloat angle) {
-
+void update_rotation(GLfloat angle)
+{
     vector<cube_rotate> face[3][3];
     int index;
     cube_rotate rotation;
@@ -73,8 +73,8 @@ void update_rotation(GLfloat angle) {
 }
 
 // reset face selection parameters
-void reset_selected_face() {
-
+void reset_selected_face()
+{
     status_sel=1;
     x_0 = 0;
     x_k = 2;
@@ -82,16 +82,16 @@ void reset_selected_face() {
     y_k = 2;
     z_0 = 0;
     z_k = 2;
-
 }
 
-void camera_opt() {
+void camera_opt()
+{
     gluLookAt(0, 80, 200, 0, 0, 0, 0, 1, 0);
 }
 
 //draw skyboxes
-void gen_skyboxes(void) {
-
+void gen_skyboxes(void)
+{
     unsigned int indFace;
 
     for (indFace=6; indFace<(NFACES*2); indFace++) {
@@ -103,8 +103,8 @@ void gen_skyboxes(void) {
 }
 
 // draw a cube
-void draw_cube(int x, int y, int z) {
-
+void draw_cube(int x, int y, int z)
+{
     unsigned int indFace;
 
     vector<cube_rotate> lrot = cube_rotations[x][y][z];
@@ -159,16 +159,13 @@ void draw_cube(int x, int y, int z) {
         }
     }
 
-
-
     glPopMatrix();
 
 } // draw cube function
 
-
 // draw function
-void display(void) {
-
+void display(void)
+{
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // reset transformations
@@ -197,8 +194,8 @@ void display(void) {
     glutSwapBuffers();
 }
 
-void loadExternalTextures() {
-
+void loadExternalTextures(void)
+{
     // local variables
     int currInd;
 
@@ -240,7 +237,8 @@ void loadExternalTextures() {
 }
 
 // specify what's shown in the window
-void view_parameters(void) {
+void view_parameters(void)
+{
     GLenum glErr;
 
     // specify projection coordinate system
@@ -402,8 +400,8 @@ void makeMenu(void)
 }
 
 // init rendering parameters
-void init(void) {
-
+void init(void)
+{
     // init parameters
 
     rot_x = 0.0; // view rotation x
@@ -437,9 +435,6 @@ void init(void) {
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpec);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-//    // enable changing material color    COOOOMMMMEEENNTTTAATTTOOO PER RIMUOVERE IL COLORE
-//    glEnable(GL_COLOR_MATERIAL);
-
     // Gouraud colorization model
     glShadeModel(GL_SMOOTH);
 
@@ -465,7 +460,8 @@ void init(void) {
 } // init
 
 // window reshape callback
-void reshape(GLsizei w, GLsizei h) {
+void reshape(GLsizei w, GLsizei h)
+{
     // prevents division by zero
     if (h == 0) h = 1;
 
@@ -479,8 +475,8 @@ void reshape(GLsizei w, GLsizei h) {
 } // reshape function
 
 // keyboard function callback
-void keyInput(unsigned char key, int x, int y) {
-
+void keyInput(unsigned char key, int x, int y)
+{
     switch (key) {
 
         case 27:
@@ -495,12 +491,9 @@ void keyInput(unsigned char key, int x, int y) {
             break;
 
         case '-':
-            if (angle <= 130) angle += 5;
+            if (angle <= 80) angle += 5;
             view_parameters();
             break;
-            // vielw rotation
-            // INcrement or DEcrement
-
 
             // cube movements
 
@@ -615,14 +608,13 @@ void SpecialInput(int key, int x, int y)
     glutPostRedisplay();
 }
 
-int main(int argc, char **argv) {
-
+int main(int argc, char **argv)
+{
     // pass potential input arguments to glutInit
     glutInit(&argc, argv);
 
     // set display mode
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-
 
     glutInitWindowSize(600, 600);
     glutCreateWindow("Project_Rubik-cube-OpenGL");
