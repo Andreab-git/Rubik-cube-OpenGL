@@ -390,18 +390,17 @@ void makeMenu(void)
     sub_menu = glutCreateMenu(game_manual);
     glutAddMenuEntry("avvicina il cubo --- > +", '+');
     glutAddMenuEntry("allontana il cubo --- > -", '-');
-    glutAddMenuEntry("sposta prima colonna --- > q", 'q' && 'Q');
-    glutAddMenuEntry("sposta seconda colonna --- > w", 'w' && 'W');
-    glutAddMenuEntry("sposta terza colonna --- > e", 'e' && 'E');
-    glutAddMenuEntry("sposta prima riga --- > a", 'a' && 'A');
-    glutAddMenuEntry("sposta seconda riga --- > s", 's' && 'S');
-    glutAddMenuEntry("sposta terza riga --- > d", 'd' && 'D');
-    //glutAddMenuEntry("lungo l'asse z, in basso --- > ", 'c' && 'C');
-    //glutAddMenuEntry("lungo l'asse z, in mezzo --- > ", 'x' && 'X');
-    //glutAddMenuEntry("lungo l'asse z, in alto --- > ", 'z' && 'Z');
-    //non so come scrivere quelli per z
-    glutAddMenuEntry("sposta verso sinistra --- > u", 'u' && 'U');
-    glutAddMenuEntry("sposta verso destra --- > o", 'o' && 'O');
+    glutAddMenuEntry("sposta prima colonna in x --- > q", 'q');
+    glutAddMenuEntry("sposta seconda colonna in x --- > w", 'w');
+    glutAddMenuEntry("sposta terza colonna in x --- > e", 'e');
+    glutAddMenuEntry("sposta prima riga in y --- > a", 'a');
+    glutAddMenuEntry("sposta seconda riga in y --- > s", 's');
+    glutAddMenuEntry("sposta terza riga in y --- > d", 'd');
+    glutAddMenuEntry("sposta prima colonna in z --- > ", 'c');
+    glutAddMenuEntry("sposta seconda colonna in z --- > ", 'x');
+    glutAddMenuEntry("sposta terza colonna in z --- > ", 'z');
+    glutAddMenuEntry("sposta verso sinistra --- > u", 'u');
+    glutAddMenuEntry("sposta verso destra --- > o", 'o');
 
     // The top menu is created: its callback function is
     // registered and menu entries, including a submenu, added.
@@ -636,7 +635,7 @@ int main(int argc, char **argv) {
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
 
-    glutInitWindowSize(400, 400);
+    glutInitWindowSize(600, 600);
     glutCreateWindow("Project_Rubik-cube-OpenGL");
 
     // keyboard handling function
