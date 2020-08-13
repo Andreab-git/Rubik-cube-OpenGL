@@ -225,6 +225,12 @@ void draw_cube(int x, int y, int z) {
         }
     }
 
+    if(x==1 && y==1 && z==1) {
+        glBindTexture(GL_TEXTURE_2D, textureID[0]);
+        glDrawArrays(GL_TRIANGLE_STRIP,  27, 4);
+        // unbind texture
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
     glPopMatrix();
 
 } // draw cube function
@@ -257,10 +263,6 @@ void display(void) {
 
 
     // flush opengl commands
-    glBindTexture(GL_TEXTURE_2D, textureID[0]);
-    glDrawArrays(GL_TRIANGLE_STRIP,  27, 4);
-    // unbind texture
-    glBindTexture(GL_TEXTURE_2D, 0);
     glutSwapBuffers();
 }
 
