@@ -7,38 +7,8 @@ GLfloat half_cube = cube_size/2;
 /* ********************************************** RUBIK'S CUBE DATA ************************************************ */
 
 // texture coordinates
-GLfloat textCoords[NFACES*4*2*2] =
+GLfloat textCoords[NFACES*NVERTICES*2] =
         {
-                0.0, 0.0,
-                1.0, 0.0,
-                0.0, 1.0,
-                1.0, 1.0,
-
-                0.0, 0.0,
-                1.0, 0.0,
-                0.0, 1.0,
-                1.0, 1.0,
-
-                0.0, 0.0,
-                1.0, 0.0,
-                0.0, 1.0,
-                1.0, 1.0,
-
-                0.0, 0.0,
-                1.0, 0.0,
-                0.0, 1.0,
-                1.0, 1.0,
-
-                0.0, 0.0,
-                1.0, 0.0,
-                0.0, 1.0,
-                1.0, 1.0,
-
-                0.0, 0.0,
-                1.0, 0.0,
-                0.0, 1.0,
-                1.0, 1.0,
-
                 0.0, 0.0,
                 1.0, 0.0,
                 0.0, 1.0,
@@ -71,7 +41,7 @@ GLfloat textCoords[NFACES*4*2*2] =
         };
 
 // vertex coordinates
-GLfloat vertexCoords[NFACES * NVERTICES * 3 * 2] = {
+GLfloat vertexCoords[NFACES * NVERTICES * 3] = {
         /* red face (front) */
         -half_cube, -half_cube, half_cube,
         half_cube, -half_cube, half_cube,
@@ -107,50 +77,10 @@ GLfloat vertexCoords[NFACES * NVERTICES * 3 * 2] = {
         half_cube, -half_cube, half_cube,
         -half_cube, -half_cube, -half_cube,
         half_cube, -half_cube, -half_cube,
-
-
-
-        /* -------------------  for selected face ---------------------- */
-
-        /* red face (front) */
-        -half_cube, -half_cube, half_cube,
-        half_cube, -half_cube, half_cube,
-        -half_cube, half_cube, half_cube,
-        half_cube, half_cube, half_cube,
-
-        /* blue face (left) */
-        -half_cube, -half_cube, half_cube,
-        -half_cube, half_cube, half_cube,
-        -half_cube, -half_cube, -half_cube,
-        -half_cube, half_cube, -half_cube,
-
-        /* orange face (back)*/
-        -half_cube, -half_cube, -half_cube,
-        half_cube, -half_cube, -half_cube,
-        -half_cube, half_cube, -half_cube,
-        half_cube, half_cube, -half_cube,
-
-        /* green face (right) */
-        half_cube, -half_cube, half_cube,
-        half_cube, -half_cube, -half_cube,
-        half_cube, half_cube, half_cube,
-        half_cube, half_cube, -half_cube,
-
-        /* white face (top) */
-        -half_cube, half_cube, half_cube,
-        half_cube, half_cube, half_cube,
-        -half_cube, half_cube, -half_cube,
-        half_cube, half_cube, -half_cube,
-
-        /* yellow face (bottom) */
-        -half_cube, -half_cube, half_cube,
-        half_cube, -half_cube, half_cube,
-        -half_cube, -half_cube, -half_cube,
-        half_cube, -half_cube, -half_cube
 };
 
 // normals
-GLfloat tNormals[NFACES*NVERTICES*3 * 2] =
+GLfloat tNormals[NFACES*NVERTICES*3] =
         {
                 /* red face (front) */
                 0.0, 0.0, 1.0,
@@ -187,46 +117,6 @@ GLfloat tNormals[NFACES*NVERTICES*3 * 2] =
                 0.0, -1.0, 0.0,
                 0.0, -1.0, 0.0,
                 0.0, -1.0, 0.0,
-
-
-                /* -------------------  for selected face ---------------------- */
-
-                /* red face (front) */
-                0.0, 0.0, 1.0,
-                0.0, 0.0, 1.0,
-                0.0, 0.0, 1.0,
-                0.0, 0.0, 1.0,
-
-                /* blue face (left) */
-                -1.0, 0.0, 0.0,
-                -1.0, 0.0, 0.0,
-                -1.0, 0.0, 0.0,
-                -1.0, 0.0, 0.0,
-
-                /* orange face (back)*/
-                0.0, 0.0, -1.0,
-                0.0, 0.0, -1.0,
-                0.0, 0.0, -1.0,
-                0.0, 0.0, -1.0,
-
-                /* green face (right) */
-                1.0, 0.0, 0.0,
-                1.0, 0.0, 0.0,
-                1.0, 0.0, 0.0,
-                1.0, 0.0, 0.0,
-
-                /* white face (top) */
-                0.0, 1.0, 0.0,
-                0.0, 1.0, 0.0,
-                0.0, 1.0, 0.0,
-                0.0, 1.0, 0.0,
-
-                /* yellow face (bottom) */
-                0.0, -1.0, 0.0,
-                0.0, -1.0, 0.0,
-                0.0, -1.0, 0.0,
-                0.0, -1.0, 0.0,
-
         };
 
 /* ****************************************************************************************************************** */
