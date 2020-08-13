@@ -231,17 +231,17 @@ void draw_cube(int x, int y, int z) {
         // unbind texture
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        glBindTexture(GL_TEXTURE_2D, textureID[13]);
+        glBindTexture(GL_TEXTURE_2D, textureID[12]);
         glDrawArrays(GL_TRIANGLE_STRIP,  28, 4);
         // unbind texture
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        glBindTexture(GL_TEXTURE_2D, textureID[14]);
+        glBindTexture(GL_TEXTURE_2D, textureID[12]);
         glDrawArrays(GL_TRIANGLE_STRIP,  32, 4);
         // unbind texture
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        glBindTexture(GL_TEXTURE_2D, textureID[15]);
+        glBindTexture(GL_TEXTURE_2D, textureID[12]);
         glDrawArrays(GL_TRIANGLE_STRIP,  36, 4);
         // unbind texture
         glBindTexture(GL_TEXTURE_2D, 0);
