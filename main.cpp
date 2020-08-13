@@ -19,7 +19,7 @@ struct cube_rotate {
 static struct BitMapFile *images[NIMAGES];
 static GLenum textureID[NIMAGES];
 
-unsigned char status=0;
+unsigned char status_sel=0;
 GLfloat angle, fAspect;
 GLint rot_x, rot_y, crement, x_0 = 0, x_k = 0, y_0 = 0, y_k = 2, z_0 = 0, z_k = 2;
 vector<cube_rotate> cube_rotations[3][3][3];
@@ -84,7 +84,7 @@ void update_rotation(GLfloat angle) {
 // reset face selection parameters
 void reset_selected_face() {
 
-    status=1;
+    status_sel=1;
     x_0 = 0;
     x_k = 2;
     y_0 = 0;
@@ -109,7 +109,6 @@ void gen_skyboxes(void) {
             // unbind texture
             glBindTexture(GL_TEXTURE_2D, 0);
     }
-
 }
 
 // draw a cube
@@ -124,110 +123,43 @@ void draw_cube(int x, int y, int z) {
     // translate to final position
     glTranslatef((x - 1) * cube_size, (y - 1) * cube_size, (z - 1) * cube_size);
 
+    if(x==1 && y==1 && z==1) {
+        gen_skyboxes();
+    }
+
     // rotate cube to correct position
     for (int i = lrot.size() - 1; i >= 0; --i)
         glRotatef(lrot[i].angle, lrot[i].x, lrot[i].y, lrot[i].z);
 
     for (indFace=0; indFace<NFACES; indFace++) {
 
-        if (status) {
-            // caso x_0 = 0 quindi prima colonna selezionata
+        if (status_sel) {
             if ((x == x_0 && x_0 == x_k) && (indFace == 0 || indFace == 2 || indFace == 4 || indFace == 5)) {
-                // Activate texture object.
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-                glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-                // unbind texture
-                glBindTexture(GL_TEXTURE_2D, 0);
-            }
-
-                // caso x_0 = 1 quindi seconda colonna selezionata
-            else if ((x == x_0 && x_0 == x_k) && (indFace == 0 || indFace == 2 || indFace == 4 || indFace == 5)) {
-                // Activate texture object.
+            } else if ((x == x_0 && x_0 == x_k) && (indFace == 0 || indFace == 2 || indFace == 4 || indFace == 5)) {
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-                glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-                // unbind texture
-                glBindTexture(GL_TEXTURE_2D, 0);
-            }
-
-                // caso x_0 = 2 quindi terza colonna selezionata
-            else if ((x == x_0 && x_0 == x_k) && (indFace == 0 || indFace == 2 || indFace == 4 || indFace == 5)) {
-                // Activate texture object.
+            } else if ((x == x_0 && x_0 == x_k) && (indFace == 0 || indFace == 2 || indFace == 4 || indFace == 5)) {
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-                glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-                // unbind texture
-                glBindTexture(GL_TEXTURE_2D, 0);
-            }
-
-
-                // caso y_0 = 0 quindi prima riga selezionata
-            else if ((y == y_0 && y_0 == y_k) && (indFace == 0 || indFace == 1 || indFace == 2 || indFace == 3)) {
-                // Activate texture object.
+            } else if ((y == y_0 && y_0 == y_k) && (indFace == 0 || indFace == 1 || indFace == 2 || indFace == 3)) {
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-                glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-                // unbind texture
-                glBindTexture(GL_TEXTURE_2D, 0);
-            }
-
-
-                // caso y_0 = 1 quindi seconda riga selezionata
-            else if ((y == y_0 && y_0 == y_k) && (indFace == 0 || indFace == 1 || indFace == 2 || indFace == 3)) {
-                // Activate texture object.
+            } else if ((y == y_0 && y_0 == y_k) && (indFace == 0 || indFace == 1 || indFace == 2 || indFace == 3)) {
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-                glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-                // unbind texture
-                glBindTexture(GL_TEXTURE_2D, 0);
-            }
-
-
-                // caso y_0 = 2 quindi terza riga selezionata
-            else if ((y == y_0 && y_0 == y_k) && (indFace == 0 || indFace == 1 || indFace == 2 || indFace == 3)) {
-                // Activate texture object.
+            } else if ((y == y_0 && y_0 == y_k) && (indFace == 0 || indFace == 1 || indFace == 2 || indFace == 3)) {
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-                glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-                // unbind texture
-                glBindTexture(GL_TEXTURE_2D, 0);
-            }
-
-
-
-            // caso z_0 = 0 quindi prima colonna selezionata verso z
-            if ((z == z_0 && z_0 == z_k) && (indFace == 1 || indFace == 3 || indFace == 4 || indFace == 5)) {
-                // Activate texture object.
+            } else if ((z == z_0 && z_0 == z_k) && (indFace == 1 || indFace == 3 || indFace == 4 || indFace == 5)) {
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-                glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-                // unbind texture
-                glBindTexture(GL_TEXTURE_2D, 0);
-            }
-
-
-            // caso z_0 = 1 quindi seconda colonna selezionata verso z
-            if ((z == z_0 && z_0 == z_k) && (indFace == 1 || indFace == 3 || indFace == 4 || indFace == 5)) {
-                // Activate texture object.
+            } else if ((z == z_0 && z_0 == z_k) && (indFace == 1 || indFace == 3 || indFace == 4 || indFace == 5)) {
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-                glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-                // unbind texture
-                glBindTexture(GL_TEXTURE_2D, 0);
-            }
-
-
-            // caso z_0 = 2 quindi terza colonna selezionata verso z
-            if ((z == z_0 && z_0 == z_k) && (indFace == 1 || indFace == 3 || indFace == 4 || indFace == 5)) {
-                // Activate texture object.
+            } else if ((z == z_0 && z_0 == z_k) && (indFace == 1 || indFace == 3 || indFace == 4 || indFace == 5)) {
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-                glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-                // unbind texture
-                glBindTexture(GL_TEXTURE_2D, 0);
-            }
-
-                // caso in cui si disegna normalmente senza texture particolari
-            else {
+            } else {
                 // Activate texture object.
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
-                glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-                // unbind texture
-                glBindTexture(GL_TEXTURE_2D, 0);
             }
 
+            glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
+            // unbind texture
+            glBindTexture(GL_TEXTURE_2D, 0);
         }
 
         else {
@@ -239,9 +171,7 @@ void draw_cube(int x, int y, int z) {
         }
     }
 
-    if(x==1 && y==1 && z==1) {
-       gen_skyboxes();
-    }
+
 
     glPopMatrix();
 
@@ -441,13 +371,13 @@ void game_manual(int id)
         case 'U': // counter-clockwise
         case 'u':
             update_rotation(-90);
-            status=0;
+            status_sel=0;
             break;
 
         case 'O': // clockwise
         case 'o':
             update_rotation(90);
-            status=0;
+            status_sel=0;
             break;
     }
     glutPostRedisplay();
@@ -660,13 +590,13 @@ void keyInput(unsigned char key, int x, int y) {
         case 'U': // counter-clockwise
         case 'u':
             update_rotation(-90);
-            status=0;
+            status_sel=0;
             break;
 
         case 'O': // clockwise
         case 'o':
             update_rotation(90);
-            status=0;
+            status_sel=0;
             break;
             // end of cube movements
 
