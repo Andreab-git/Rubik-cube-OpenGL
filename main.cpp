@@ -98,6 +98,20 @@ void camera_opt() {
     gluLookAt(0, 80, 200, 0, 0, 0, 0, 1, 0);
 }
 
+//draw skyboxes
+void gen_skyboxes(void) {
+
+    unsigned int indFace;
+
+    for (indFace=6; indFace<12; indFace++) {
+            glBindTexture(GL_TEXTURE_2D, textureID[13]);
+            glDrawArrays(GL_TRIANGLE_STRIP,  indFace*NVERTICES, 4);
+            // unbind texture
+            glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+}
+
 // draw a cube
 void draw_cube(int x, int y, int z) {
 
@@ -226,29 +240,12 @@ void draw_cube(int x, int y, int z) {
     }
 
     if(x==1 && y==1 && z==1) {
-        glBindTexture(GL_TEXTURE_2D, textureID[12]);
-        glDrawArrays(GL_TRIANGLE_STRIP,  24, 4);
-        // unbind texture
-        glBindTexture(GL_TEXTURE_2D, 0);
-
-        glBindTexture(GL_TEXTURE_2D, textureID[12]);
-        glDrawArrays(GL_TRIANGLE_STRIP,  28, 4);
-        // unbind texture
-        glBindTexture(GL_TEXTURE_2D, 0);
-
-        glBindTexture(GL_TEXTURE_2D, textureID[12]);
-        glDrawArrays(GL_TRIANGLE_STRIP,  32, 4);
-        // unbind texture
-        glBindTexture(GL_TEXTURE_2D, 0);
-
-        glBindTexture(GL_TEXTURE_2D, textureID[12]);
-        glDrawArrays(GL_TRIANGLE_STRIP,  36, 4);
-        // unbind texture
-        glBindTexture(GL_TEXTURE_2D, 0);
+       gen_skyboxes();
     }
     glPopMatrix();
 
 } // draw cube function
+
 
 // draw function
 void display(void) {
