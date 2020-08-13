@@ -1,9 +1,4 @@
 // Rubik Cube in OpenGL
-/* TODO: INSERIRE CONTORNI NERI SU FACCE */
-/* TODO: RINOMINARE TUTTE LE FUNZIONI */
-/* TODO: TROVARE UN RIMPIAZZO A vector OPPURE CAPIRE COSA FA DI PRECISO */
-/* TODO: METTERE UNA TEXTURE DI SFONDO PER RENDERLO PIU' CARINO */
-/* TODO: CAPIRE A CHE CAZZO SERVE using namespace std; */
 
 #include "readBMP.h"
 #include "data_path.h"
@@ -27,11 +22,8 @@ vector<cube_rotate> cube_rotations[3][3][3];
 // init lighting
 GLfloat lightAmb[4] = {0.5, 0.5, 0.5, 1.0};
 GLfloat lightDiff[4] = {0.8, 0.8, 0.8, 1.0};        // color
-GLfloat lightSpec[4] = {1.0, 1.0, 1.0, 1.0};    // brightness
+GLfloat lightSpec[4] = {1.0, 1.0, 1.0, 1.0};        // brightness
 GLfloat lightPos[4] = {0.0, 150.0, 50.0, 1.0};
-
-/* L'ho commentata perche' sembra non servire... scritta cosi' e' solo un prototipo */
-// void view_parameters(void);
 
 void update_rotation(GLfloat angle) {
 
@@ -280,8 +272,6 @@ void top_menu(int id)
     if (id == 1) exit(0);
 }
 
-
-// TODO: Rimuovere i comandi e lasciare solo al descrizione?
 void game_manual(int id)
 {
     switch (id) {
