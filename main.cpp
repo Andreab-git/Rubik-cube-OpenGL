@@ -13,18 +13,18 @@ struct cube_rotate {
 static struct BitMapFile *images[NIMAGES];
 static GLenum textureID[NIMAGES];
 
-unsigned char status_sel=0;
+unsigned char status_sel=0;  // "boolean" for enable / disable selected faces
 GLfloat angle, fAspect;
 GLint rot_x, rot_y, crement, x_0 = 0, x_k = 0, y_0 = 0, y_k = 2, z_0 = 0, z_k = 2;
 vector<cube_rotate> cube_rotations[3][3][3];
 
 // init lighting
-GLfloat lightAmb[4] = {0.5, 0.5, 0.5, 1.0};
+GLfloat lightAmb[4] = {0.8, 0.8, 0.8, 1.0};
 GLfloat lightDiff[4] = {0.8, 0.8, 0.8, 1.0};
 GLfloat lightSpec[4] = {1.0, 1.0, 1.0, 1.0};
 GLfloat lightPos[4] = {0.0, 150.0, 50.0, 1.0};
 
-void update_rotation(GLfloat angle)
+void update_rotation(GLfloat rot_angle)
 {
     vector<cube_rotate> face[3][3];
     int index;
@@ -38,17 +38,17 @@ void update_rotation(GLfloat angle)
             index = 2 - j % 3;
 
             if (x_0 == x_k) {
-                rotation = {angle, 1.0, 0.0, 0.0};
+                rotation = {rot_angle, 1.0, 0.0, 0.0};
                 face[index][i] = cube_rotations[x_k][i][j];
             }
 
             if (y_0 == y_k) {
-                rotation = {angle, 0.0, 1.0, 0.0};
+                rotation = {rot_angle, 0.0, 1.0, 0.0};
                 face[index][i] = cube_rotations[j][y_k][i];
             }
 
             if (z_0 == z_k) {
-                rotation = {-1 * angle, 0.0, 0.0, 1.0};
+                rotation = {-1 * rot_angle, 0.0, 0.0, 1.0};
                 face[index][i] = cube_rotations[j][i][z_k];
             }
 
@@ -278,7 +278,7 @@ void game_manual(int id)
             break;
 
         case '-':
-            if (angle <= 130) angle += 5;
+            if (angle <= 80) angle += 5;
             view_parameters();
             break;
 
@@ -286,21 +286,18 @@ void game_manual(int id)
 
             // select cube face
             // x-axis faces
-        case 'Q':
         case 'q':
             reset_selected_face();
             x_0 = 0;
             x_k = 0;
             break;
 
-        case 'W':
         case 'w':
             reset_selected_face();
             x_0 = 1;
             x_k = 1;
             break;
 
-        case 'E':
         case 'e':
             reset_selected_face();
             x_0 = 2;
@@ -308,21 +305,18 @@ void game_manual(int id)
             break;
 
             // y-axis faces
-        case 'A':
         case 'a':
             reset_selected_face();
             y_0 = 0;
             y_k = 0;
             break;
 
-        case 'S':
         case 's':
             reset_selected_face();
             y_0 = 1;
             y_k = 1;
             break;
 
-        case 'D':
         case 'd':
             reset_selected_face();
             y_0 = 2;
@@ -330,48 +324,43 @@ void game_manual(int id)
             break;
 
             // z-axis faces
-        case 'C':
         case 'c':
             reset_selected_face();
             z_0 = 0;
             z_k = 0;
             break;
 
-        case 'X':
         case 'x':
             reset_selected_face();
             z_0 = 1;
             z_k = 1;
             break;
 
-        case 'Z':
         case 'z':
             reset_selected_face();
             z_0 = 2;
             z_k = 2;
             break;
 
-            // move selected face
-        case 'U': // counter-clockwise
+        // move selected face
         case 'u':
             update_rotation(-90);
             status_sel=0;
             break;
 
-        case 'O': // clockwise
         case 'o':
             update_rotation(90);
             status_sel=0;
             break;
     }
+
     glutPostRedisplay();
 }
 
 // Menu
 void makeMenu(void)
 {
-    // The sub-menu is created first (because it should be
-    // visible when the top menu is created)
+    // The sub-menu is created first (because it should be visible when the top menu is created)
     int sub_menu;
 
     sub_menu = glutCreateMenu(game_manual);
@@ -386,8 +375,8 @@ void makeMenu(void)
     glutAddMenuEntry("sposta prima colonna in z --- > ", 'c');
     glutAddMenuEntry("sposta seconda colonna in z --- > ", 'x');
     glutAddMenuEntry("sposta terza colonna in z --- > ", 'z');
-    glutAddMenuEntry("sposta verso sinistra --- > u", 'u');
-    glutAddMenuEntry("sposta verso destra --- > o", 'o');
+    glutAddMenuEntry("sposta in senso orario --- > u", 'u');
+    glutAddMenuEntry("sposta in senso antiorario --- > o", 'o');
 
     // The top menu is created: its callback function is
     // registered and menu entries, including a submenu, added.
@@ -404,21 +393,21 @@ void init(void)
 {
     // init parameters
 
-    rot_x = 0.0; // view rotation x
-    rot_y = 0.0; // view rotation y
+    rot_x = 0; // view rotation x
+    rot_y = 0; // view rotation y
     crement = 5; // rotation (in/de)crement
-    angle = 45;
+    angle = 60;
 
     makeMenu();
 
     // material brightness capacity
     GLfloat specularity[4] = {1.0, 1.0, 1.0, 1.0};
-    GLint material_specularity = 60;
+    GLint material_specularity = 80;
 
     // black background
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-    // material reflectability
+    // material specularity
     glMaterialfv(GL_FRONT, GL_SPECULAR, specularity);
     // brightness concentration
     glMateriali(GL_FRONT, GL_SHININESS, material_specularity);
@@ -445,6 +434,7 @@ void init(void)
     glEnable(GL_DEPTH_TEST);
 
     loadExternalTextures();
+
     // initialize model view transforms
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
