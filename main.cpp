@@ -104,7 +104,7 @@ void gen_skyboxes(void) {
     unsigned int indFace;
 
     for (indFace=6; indFace<(NFACES*2); indFace++) {
-            glBindTexture(GL_TEXTURE_2D, textureID[13]);
+            glBindTexture(GL_TEXTURE_2D, textureID[12]);
             glDrawArrays(GL_TRIANGLE_STRIP,  indFace*NVERTICES, 4);
             // unbind texture
             glBindTexture(GL_TEXTURE_2D, 0);
@@ -242,6 +242,7 @@ void draw_cube(int x, int y, int z) {
     if(x==1 && y==1 && z==1) {
        gen_skyboxes();
     }
+
     glPopMatrix();
 
 } // draw cube function
