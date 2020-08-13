@@ -240,6 +240,11 @@ void draw_cube(int x, int y, int z) {
         glDrawArrays(GL_TRIANGLE_STRIP,  32, 4);
         // unbind texture
         glBindTexture(GL_TEXTURE_2D, 0);
+
+        glBindTexture(GL_TEXTURE_2D, textureID[15]);
+        glDrawArrays(GL_TRIANGLE_STRIP,  36, 4);
+        // unbind texture
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
     glPopMatrix();
 
