@@ -226,8 +226,18 @@ void draw_cube(int x, int y, int z) {
     }
 
     if(x==1 && y==1 && z==1) {
-        glBindTexture(GL_TEXTURE_2D, textureID[0]);
-        glDrawArrays(GL_TRIANGLE_STRIP,  27, 4);
+        glBindTexture(GL_TEXTURE_2D, textureID[12]);
+        glDrawArrays(GL_TRIANGLE_STRIP,  24, 4);
+        // unbind texture
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        glBindTexture(GL_TEXTURE_2D, textureID[13]);
+        glDrawArrays(GL_TRIANGLE_STRIP,  28, 4);
+        // unbind texture
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        glBindTexture(GL_TEXTURE_2D, textureID[14]);
+        glDrawArrays(GL_TRIANGLE_STRIP,  32, 4);
         // unbind texture
         glBindTexture(GL_TEXTURE_2D, 0);
     }
@@ -317,7 +327,7 @@ void view_parameters(void) {
     glLoadIdentity();
 
     // specify projection perspective
-    gluPerspective(angle, fAspect, 0.4, 500);
+    gluPerspective(angle, fAspect, 0.4, 700);
 
     // ... it does not hurt to check that everything went well
     if ((glErr=glGetError()) != 0) {

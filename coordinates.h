@@ -1,16 +1,41 @@
 #define NFACES 6
 #define NVERTICES 4
 
-GLfloat background_image= 200.0;
-GLfloat half_image=background_image/2;
+GLfloat skyboxe_image= 550.0;
+GLfloat half_image=skyboxe_image/2;
 GLfloat cube_size = 30.0; // cuboid size
 GLfloat half_cube = cube_size/2;
 
 /* ********************************************** RUBIK'S CUBE DATA ************************************************ */
 
 // texture coordinates
-GLfloat textCoords[(NFACES+1)*NVERTICES*2] =
+GLfloat textCoords[NFACES*NVERTICES*2*2] =
         {
+                0.0, 0.0,
+                1.0, 0.0,
+                0.0, 1.0,
+                1.0, 1.0,
+
+                0.0, 0.0,
+                1.0, 0.0,
+                0.0, 1.0,
+                1.0, 1.0,
+
+                0.0, 0.0,
+                1.0, 0.0,
+                0.0, 1.0,
+                1.0, 1.0,
+
+                0.0, 0.0,
+                1.0, 0.0,
+                0.0, 1.0,
+                1.0, 1.0,
+
+                0.0, 0.0,
+                1.0, 0.0,
+                0.0, 1.0,
+                1.0, 1.0,
+
                 0.0, 0.0,
                 1.0, 0.0,
                 0.0, 1.0,
@@ -48,7 +73,7 @@ GLfloat textCoords[(NFACES+1)*NVERTICES*2] =
         };
 
 // vertex coordinates
-GLfloat vertexCoords[(NFACES + 1) * NVERTICES * 3] = {
+GLfloat vertexCoords[NFACES * NVERTICES * 3 *2] = {
         /* red face (front) */
         -half_cube, -half_cube, half_cube,
         half_cube, -half_cube, half_cube,
@@ -85,16 +110,48 @@ GLfloat vertexCoords[(NFACES + 1) * NVERTICES * 3] = {
         -half_cube, -half_cube, -half_cube,
         half_cube, -half_cube, -half_cube,
 
-        /*background_image*/
+        /*skyboxe_image*/
+
+        /*back*/
+        -half_image, -half_image, -half_image,
+        half_image, -half_image, -half_image,
+        -half_image, half_image, -half_image,
+        half_image, half_image, -half_image,
+
+        /*front*/
         -half_image, -half_image, half_image,
         half_image, -half_image, half_image,
         -half_image, half_image, half_image,
         half_image, half_image, half_image,
 
+        /*left*/
+        -half_image, -half_image, half_image,
+        -half_image, half_image, half_image,
+        -half_image, -half_image, half_image,
+        -half_image, half_image, half_image,
+
+        /*right*/
+        half_image, -half_image, half_image,
+        half_image, -half_image, -half_image,
+        half_image, half_image, half_image,
+        half_image, half_image, -half_image,
+
+        /*top*/
+        -half_image, half_image, half_image,
+        half_image, half_image, half_image,
+        -half_image, half_image, -half_image,
+        half_image, half_image, -half_image,
+
+        /*bottom*/
+        -half_image, -half_image, half_image,
+        half_image, -half_image, half_image,
+        -half_image, -half_image, -half_image,
+        half_image, -half_image, -half_image,
+
 };
 
 // normals
-GLfloat tNormals[(NFACES+1)*NVERTICES*3] =
+GLfloat tNormals[NFACES*NVERTICES*3*2] =
         {
                 /* red face (front) */
                 0.0, 0.0, 1.0,
@@ -132,11 +189,43 @@ GLfloat tNormals[(NFACES+1)*NVERTICES*3] =
                 0.0, -1.0, 0.0,
                 0.0, -1.0, 0.0,
 
-                /*background_image*/
+                /*skyboxe_image*/
+
+                /*back*/
                 0.0, 0.0, 1.0,
                 0.0, 0.0, 1.0,
                 0.0, 0.0, 1.0,
                 0.0, 0.0, 1.0,
+
+                /*front*/
+                0.0, 0.0, -1.0,
+                0.0, 0.0, -1.0,
+                0.0, 0.0, -1.0,
+                0.0, 0.0, -1.0,
+
+                /*right*/
+                -1.0, 0.0, 0.0,
+                -1.0, 0.0, 0.0,
+                -1.0, 0.0, 0.0,
+                -1.0, 0.0, 0.0,
+
+                /*left*/
+                1.0, 0.0, 0.0,
+                1.0, 0.0, 0.0,
+                1.0, 0.0, 0.0,
+                1.0, 0.0, 0.0,
+
+                /*top*/
+                0.0, -1.0, 0.0,
+                0.0, -1.0, 0.0,
+                0.0, -1.0, 0.0,
+                0.0, -1.0, 0.0,
+
+                /*bottom*/
+                0.0, 1.0, 0.0,
+                0.0, 1.0, 0.0,
+                0.0, 1.0, 0.0,
+                0.0, 1.0, 0.0,
         };
 
 /* ****************************************************************************************************************** */
