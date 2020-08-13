@@ -125,10 +125,14 @@ GLfloat vertexCoords[NFACES * NVERTICES * 3 *2] = {
         half_image, half_image, half_image,
 
         /*left*/
-        -half_image, -half_image, half_image,
+        /*-half_image, -half_image, half_image,
         -half_image, half_image, half_image,
         -half_image, -half_image, half_image,
-        -half_image, half_image, half_image,
+        -half_image, half_image, half_image,*/
+        half_image, -half_image, half_image,
+        half_image, -half_image, -half_image,
+        half_image, half_image, half_image,
+        half_image, half_image, -half_image,
 
         /*right*/
         half_image, -half_image, half_image,
