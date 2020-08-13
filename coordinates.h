@@ -1,14 +1,21 @@
 #define NFACES 6
 #define NVERTICES 4
 
+GLfloat background_image= 200.0;
+GLfloat half_image=background_image/2;
 GLfloat cube_size = 30.0; // cuboid size
 GLfloat half_cube = cube_size/2;
 
 /* ********************************************** RUBIK'S CUBE DATA ************************************************ */
 
 // texture coordinates
-GLfloat textCoords[NFACES*NVERTICES*2] =
+GLfloat textCoords[(NFACES+1)*NVERTICES*2] =
         {
+                0.0, 0.0,
+                1.0, 0.0,
+                0.0, 1.0,
+                1.0, 1.0,
+
                 0.0, 0.0,
                 1.0, 0.0,
                 0.0, 1.0,
@@ -41,7 +48,7 @@ GLfloat textCoords[NFACES*NVERTICES*2] =
         };
 
 // vertex coordinates
-GLfloat vertexCoords[NFACES * NVERTICES * 3] = {
+GLfloat vertexCoords[(NFACES + 1) * NVERTICES * 3] = {
         /* red face (front) */
         -half_cube, -half_cube, half_cube,
         half_cube, -half_cube, half_cube,
@@ -77,10 +84,17 @@ GLfloat vertexCoords[NFACES * NVERTICES * 3] = {
         half_cube, -half_cube, half_cube,
         -half_cube, -half_cube, -half_cube,
         half_cube, -half_cube, -half_cube,
+
+        /*background_image*/
+        -half_image, -half_image, half_image,
+        half_image, -half_image, half_image,
+        -half_image, half_image, half_image,
+        half_image, half_image, half_image,
+
 };
 
 // normals
-GLfloat tNormals[NFACES*NVERTICES*3] =
+GLfloat tNormals[(NFACES+1)*NVERTICES*3] =
         {
                 /* red face (front) */
                 0.0, 0.0, 1.0,
@@ -117,6 +131,12 @@ GLfloat tNormals[NFACES*NVERTICES*3] =
                 0.0, -1.0, 0.0,
                 0.0, -1.0, 0.0,
                 0.0, -1.0, 0.0,
+
+                /*background_image*/
+                0.0, 0.0, 1.0,
+                0.0, 0.0, 1.0,
+                0.0, 0.0, 1.0,
+                0.0, 0.0, 1.0,
         };
 
 /* ****************************************************************************************************************** */

@@ -1,8 +1,6 @@
 // Rubik Cube in OpenGL
 /* TODO: INSERIRE CONTORNI NERI SU FACCE */
-/* TODO: ELIMINARE GAP TRA QUADRATI */
 /* TODO: RINOMINARE TUTTE LE FUNZIONI */
-/* TODO: EVIDENZIARE LA RIGA/COLONNA CHE SI STA PER MUOVERE */
 /* TODO: TROVARE UN RIMPIAZZO A vector OPPURE CAPIRE COSA FA DI PRECISO */
 /* TODO: METTERE UNA TEXTURE DI SFONDO PER RENDERLO PIU' CARINO */
 /* TODO: CAPIRE A CHE CAZZO SERVE using namespace std; */
@@ -246,6 +244,7 @@ void display(void) {
     glRotatef(rot_x, 1.0, 0.0, 0.0); // rotate in y axis
     glRotatef(rot_y, 0.0, 1.0, 0.0); // rotate in x axis
 
+
     for (int i = 0; i < 3; ++i) // step through x axis
         for (int j = 0; j < 3; ++j) // step through y axis
             for (int k = 0; k < 3; ++k) { // step through z axis
@@ -257,8 +256,12 @@ void display(void) {
 
             }
 
+
     // flush opengl commands
-    glutSwapBuffers();
+    glBindTexture(GL_TEXTURE_2D, textureID[0]);
+    glDrawArrays(GL_TRIANGLE_STRIP, 27, 4);
+    // unbind texture
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void loadExternalTextures() {
@@ -445,18 +448,18 @@ void makeMenu(void)
     sub_menu = glutCreateMenu(game_manual);
     glutAddMenuEntry("avvicina il cubo --- > +", '+');
     glutAddMenuEntry("allontana il cubo --- > -", '-');
-    glutAddMenuEntry("sposta prima colonna --- > q", 'q');
-    glutAddMenuEntry("sposta seconda colonna --- > w", 'w');
-    glutAddMenuEntry("sposta terza colonna --- > e", 'e');
-    glutAddMenuEntry("sposta prima riga --- > a", 'a');
-    glutAddMenuEntry("sposta seconda riga --- > s", 's');
-    glutAddMenuEntry("sposta terza riga --- > d", 'd');
-    //glutAddMenuEntry("lungo l'asse z, in basso --- > ", 'c');
-    //glutAddMenuEntry("lungo l'asse z, in mezzo --- > ", 'x');
-    //glutAddMenuEntry("lungo l'asse z, in alto --- > ", 'z');
+    glutAddMenuEntry("sposta prima colonna --- > q", 'q' && 'Q');
+    glutAddMenuEntry("sposta seconda colonna --- > w", 'w' && 'W');
+    glutAddMenuEntry("sposta terza colonna --- > e", 'e' && 'E');
+    glutAddMenuEntry("sposta prima riga --- > a", 'a' && 'A');
+    glutAddMenuEntry("sposta seconda riga --- > s", 's' && 'S');
+    glutAddMenuEntry("sposta terza riga --- > d", 'd' && 'D');
+    //glutAddMenuEntry("lungo l'asse z, in basso --- > ", 'c' && 'C');
+    //glutAddMenuEntry("lungo l'asse z, in mezzo --- > ", 'x' && 'X');
+    //glutAddMenuEntry("lungo l'asse z, in alto --- > ", 'z' && 'Z');
     //non so come scrivere quelli per z
-    glutAddMenuEntry("sposta verso sinistra --- > u", 'u');
-    glutAddMenuEntry("sposta verso destra --- > o", 'o');
+    glutAddMenuEntry("sposta verso sinistra --- > u", 'u' && 'U');
+    glutAddMenuEntry("sposta verso destra --- > o", 'o' && 'O');
 
     // The top menu is created: its callback function is
     // registered and menu entries, including a submenu, added.
