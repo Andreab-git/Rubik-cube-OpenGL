@@ -244,7 +244,6 @@ void display(void) {
     glRotatef(rot_x, 1.0, 0.0, 0.0); // rotate in y axis
     glRotatef(rot_y, 0.0, 1.0, 0.0); // rotate in x axis
 
-
     for (int i = 0; i < 3; ++i) // step through x axis
         for (int j = 0; j < 3; ++j) // step through y axis
             for (int k = 0; k < 3; ++k) { // step through z axis
@@ -259,9 +258,10 @@ void display(void) {
 
     // flush opengl commands
     glBindTexture(GL_TEXTURE_2D, textureID[0]);
-    glDrawArrays(GL_TRIANGLE_STRIP, 27, 4);
+    glDrawArrays(GL_TRIANGLE_STRIP,  27, 4);
     // unbind texture
     glBindTexture(GL_TEXTURE_2D, 0);
+    glutSwapBuffers();
 }
 
 void loadExternalTextures() {
