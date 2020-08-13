@@ -1,10 +1,10 @@
 #define NFACES 6
 #define NVERTICES 4
+#define CUBESIZE 30.0
+#define SKYBOX_IMG 550.0
 
-GLfloat skyboxe_image= 550.0;
-GLfloat half_image=skyboxe_image/2;
-GLfloat cube_size = 30.0; // cuboid size
-GLfloat half_cube = cube_size/2;
+GLfloat half_image = SKYBOX_IMG/2;
+GLfloat half_cube = CUBESIZE/2;
 
 /* ********************************************** RUBIK'S CUBE DATA ************************************************ */
 
@@ -110,39 +110,39 @@ GLfloat vertexCoords[NFACES * NVERTICES * 3 *2] = {
         -half_cube, -half_cube, -half_cube,
         half_cube, -half_cube, -half_cube,
 
-        /*skyboxe_image*/
+        /* skyboxes_image */
 
-        /*back*/
+        /* back */
         -half_image, -half_image, -half_image,
         half_image, -half_image, -half_image,
         -half_image, half_image, -half_image,
         half_image, half_image, -half_image,
 
-        /*front*/
+        /* front */
         -half_image, -half_image, half_image,
         half_image, -half_image, half_image,
         -half_image, half_image, half_image,
         half_image, half_image, half_image,
 
-        /*left*/
+        /* left */
         -half_image, -half_image, half_image,
         -half_image, half_image, half_image,
         -half_image, -half_image, -half_image,
         -half_image, half_image, -half_image,
 
-        /*right*/
+        /* right */
         half_image, -half_image, half_image,
         half_image, -half_image, -half_image,
         half_image, half_image, half_image,
         half_image, half_image, -half_image,
 
-        /*top*/
+        /* top */
         -half_image, half_image, half_image,
         half_image, half_image, half_image,
         -half_image, half_image, -half_image,
         half_image, half_image, -half_image,
 
-        /*bottom*/
+        /* bottom */
         -half_image, -half_image, half_image,
         half_image, -half_image, half_image,
         -half_image, -half_image, -half_image,
@@ -189,39 +189,39 @@ GLfloat tNormals[NFACES*NVERTICES*3*2] =
                 0.0, -1.0, 0.0,
                 0.0, -1.0, 0.0,
 
-                /*skyboxe_image*/
+                /*skyboxes_image*/
 
-                /*back*/
+                /* back */
                 0.0, 0.0, 1.0,
                 0.0, 0.0, 1.0,
                 0.0, 0.0, 1.0,
                 0.0, 0.0, 1.0,
 
-                /*front*/
+                /* front */
                 0.0, 0.0, -1.0,
                 0.0, 0.0, -1.0,
                 0.0, 0.0, -1.0,
                 0.0, 0.0, -1.0,
 
-                /*left*/
+                /* left */
                 1.0, 0.0, 0.0,
                 1.0, 0.0, 0.0,
                 1.0, 0.0, 0.0,
                 1.0, 0.0, 0.0,
 
-                /*right*/
+                /* right */
                 -1.0, 0.0, 0.0,
                 -1.0, 0.0, 0.0,
                 -1.0, 0.0, 0.0,
                 -1.0, 0.0, 0.0,
 
-                /*top*/
+                /* top */
                 0.0, -1.0, 0.0,
                 0.0, -1.0, 0.0,
                 0.0, -1.0, 0.0,
                 0.0, -1.0, 0.0,
 
-                /*bottom*/
+                /* bottom */
                 0.0, 1.0, 0.0,
                 0.0, 1.0, 0.0,
                 0.0, 1.0, 0.0,
