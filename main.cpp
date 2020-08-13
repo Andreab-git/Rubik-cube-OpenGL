@@ -457,7 +457,7 @@ void init(void) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-// Set vertex arrays for coordinates, normals and texture coordinates
+    // Set vertex arrays for coordinates, normals and texture coordinates
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, vertexCoords);
     glEnableClientState(GL_NORMAL_ARRAY);
