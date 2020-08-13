@@ -95,10 +95,10 @@ void gen_skyboxes(void)
     unsigned int indFace;
 
     for (indFace=6; indFace<(NFACES*2); indFace++) {
-            glBindTexture(GL_TEXTURE_2D, textureID[12]);
-            glDrawArrays(GL_TRIANGLE_STRIP,  indFace*NVERTICES, 4);
-            // unbind texture
-            glBindTexture(GL_TEXTURE_2D, 0);
+        glBindTexture(GL_TEXTURE_2D, textureID[12]);
+        glDrawArrays(GL_TRIANGLE_STRIP,  indFace*NVERTICES, 4);
+        // unbind texture
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 }
 
@@ -114,9 +114,9 @@ void draw_cube(int x, int y, int z)
     // translate to final position
     glTranslatef((x - 1) * cube_size, (y - 1) * cube_size, (z - 1) * cube_size);
 
-    if(x==1 && y==1 && z==1) {
+    // generate skyboxes from the center of the cube
+    if(x==1 && y==1 && z==1)
         gen_skyboxes();
-    }
 
     // rotate cube to correct position
     for (int i = lrot.size() - 1; i >= 0; --i)
@@ -148,22 +148,19 @@ void draw_cube(int x, int y, int z)
             glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
             // unbind texture
             glBindTexture(GL_TEXTURE_2D, 0);
-        }
 
-        else {
-                // Activate texture object.
-                glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
-                glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
-                // unbind texture
-                glBindTexture(GL_TEXTURE_2D, 0);
+        } else { // draw cube with standard textures
+
+            glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
+            glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
+            // unbind texture
+            glBindTexture(GL_TEXTURE_2D, 0);
         }
     }
 
     glPopMatrix();
+}
 
-} // draw cube function
-
-// draw function
 void display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -175,20 +172,13 @@ void display(void)
     camera_opt();
 
     // apply visualization transformations
-    glRotatef(rot_x, 1.0, 0.0, 0.0); // rotate in y axis
-    glRotatef(rot_y, 0.0, 1.0, 0.0); // rotate in x axis
+    glRotatef(rot_x, 1.0, 0.0, 0.0);
+    glRotatef(rot_y, 0.0, 1.0, 0.0);
 
     for (int i = 0; i < 3; ++i) // step through x axis
         for (int j = 0; j < 3; ++j) // step through y axis
-            for (int k = 0; k < 3; ++k) { // step through z axis
-
-                // draw a single cube
+            for (int k = 0; k < 3; ++k)  // step through z axis
                 draw_cube(i, j, k);
-                /* Messo per capire quali sono le coordinate dei vari cubi */
-                //  printf("i %d , j %d, k %d\n", i, j, k);
-
-            }
-
 
     // flush opengl commands
     glutSwapBuffers();
@@ -260,13 +250,18 @@ void view_parameters(void)
 
     // specify observer and target positions
     camera_opt();
-} // load visualization parameters
+}
 
-//parte menu
+
 void top_menu(int id)
 {
     // Exit if the user selected the "quit" option
-    if (id == 1) exit(0);
+    if (id == 1) {
+        // free allocated memory
+        for (int i = 0; i < NIMAGES; i++)
+            free(images[i]->data);
+        exit(0);
+    }
 }
 
 void game_manual(int id)
@@ -282,9 +277,6 @@ void game_manual(int id)
             view_parameters();
             break;
 
-            // cube movements
-
-            // select cube face
             // x-axis faces
         case 'q':
             reset_selected_face();
@@ -342,7 +334,7 @@ void game_manual(int id)
             z_k = 2;
             break;
 
-        // move selected face
+            // move selected face
         case 'u':
             update_rotation(-90);
             status_sel=0;
@@ -357,7 +349,6 @@ void game_manual(int id)
     glutPostRedisplay();
 }
 
-// Menu
 void makeMenu(void)
 {
     // The sub-menu is created first (because it should be visible when the top menu is created)
@@ -378,8 +369,7 @@ void makeMenu(void)
     glutAddMenuEntry("sposta in senso orario --- > u", 'u');
     glutAddMenuEntry("sposta in senso antiorario --- > o", 'o');
 
-    // The top menu is created: its callback function is
-    // registered and menu entries, including a submenu, added.
+    // The top menu is created: its callback function is registered and menu entries, including a submenu, added.
     glutCreateMenu(top_menu);
     glutAddSubMenu("Comandi", sub_menu);
     glutAddMenuEntry("Quit",1);
@@ -388,11 +378,9 @@ void makeMenu(void)
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
-// init rendering parameters
 void init(void)
 {
     // init parameters
-
     rot_x = 0; // view rotation x
     rot_y = 0; // view rotation y
     crement = 5; // rotation (in/de)crement
@@ -447,9 +435,8 @@ void init(void)
     // Activate client state for texturing
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glTexCoordPointer(2, GL_FLOAT, 0, textCoords);
-} // init
+}
 
-// window reshape callback
 void reshape(GLsizei w, GLsizei h)
 {
     // prevents division by zero
@@ -485,9 +472,6 @@ void keyInput(unsigned char key, int x, int y)
             view_parameters();
             break;
 
-            // cube movements
-
-            // select cube face
             // x-axis faces
         case 'Q':
         case 'q':
@@ -577,8 +561,6 @@ void keyInput(unsigned char key, int x, int y)
 
 void SpecialInput(int key, int x, int y)
 {
-    //view rotation
-    //increment or decrement
     switch(key)
     {
         case GLUT_KEY_UP:
