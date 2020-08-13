@@ -3,7 +3,6 @@
 #include "readBMP.h"
 #include "data_path.h"
 #include "coordinates.h"
-#include "main.h"
 
 using namespace std;
 
