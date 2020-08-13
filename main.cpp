@@ -112,7 +112,7 @@ void draw_cube(int x, int y, int z)
     glPushMatrix();
 
     // translate to final position
-    glTranslatef((x - 1) * cube_size, (y - 1) * cube_size, (z - 1) * cube_size);
+    glTranslatef((x - 1) * CUBESIZE, (y - 1) * CUBESIZE, (z - 1) * CUBESIZE);
 
     // generate skyboxes from the center of the cube
     if(x==1 && y==1 && z==1)
