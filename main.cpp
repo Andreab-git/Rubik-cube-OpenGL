@@ -423,11 +423,13 @@ void game_manual(int id)
         case 'U': // counter-clockwise
         case 'u':
             update_rotation(-90);
+            status=0;
             break;
 
         case 'O': // clockwise
         case 'o':
             update_rotation(90);
+            status=0;
             break;
     }
     glutPostRedisplay();
