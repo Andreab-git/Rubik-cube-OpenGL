@@ -152,10 +152,7 @@ void draw_cube(int x, int y, int z) {
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
             } else if ((z == z_0 && z_0 == z_k) && (indFace == 1 || indFace == 3 || indFace == 4 || indFace == 5)) {
                 glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-            } else {
-                // Activate texture object.
-                glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
-            }
+            } else { glBindTexture(GL_TEXTURE_2D, textureID[indFace]); }
 
             glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
             // unbind texture
