@@ -125,24 +125,19 @@ void draw_cube(int x, int y, int z)
     for (indFace=0; indFace<NFACES; indFace++) {
 
         if (status_sel) {
-            if ((x == x_0 && x_0 == x_k) && (indFace == 0 || indFace == 2 || indFace == 4 || indFace == 5)) {
-                glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-            } else if ((x == x_0 && x_0 == x_k) && (indFace == 0 || indFace == 2 || indFace == 4 || indFace == 5)) {
-                glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-            } else if ((x == x_0 && x_0 == x_k) && (indFace == 0 || indFace == 2 || indFace == 4 || indFace == 5)) {
-                glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-            } else if ((y == y_0 && y_0 == y_k) && (indFace == 0 || indFace == 1 || indFace == 2 || indFace == 3)) {
-                glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-            } else if ((y == y_0 && y_0 == y_k) && (indFace == 0 || indFace == 1 || indFace == 2 || indFace == 3)) {
-                glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-            } else if ((y == y_0 && y_0 == y_k) && (indFace == 0 || indFace == 1 || indFace == 2 || indFace == 3)) {
-                glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-            } else if ((z == z_0 && z_0 == z_k) && (indFace == 1 || indFace == 3 || indFace == 4 || indFace == 5)) {
-                glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-            } else if ((z == z_0 && z_0 == z_k) && (indFace == 1 || indFace == 3 || indFace == 4 || indFace == 5)) {
-                glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
-            } else if ((z == z_0 && z_0 == z_k) && (indFace == 1 || indFace == 3 || indFace == 4 || indFace == 5)) {
-                glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
+
+            if (x == x_0 && x_0 == x_k) {
+                if ((indFace == 0 || indFace == 2 || indFace == 4 || indFace == 5))
+                    glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
+                else glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
+            } else if (y == y_0 && y_0 == y_k) {
+                if (indFace == 0 || indFace == 1 || indFace == 2 || indFace == 3)
+                    glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
+                else glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
+            } else if (z == z_0 && z_0 == z_k) {
+                if (indFace == 1 || indFace == 3 || indFace == 4 || indFace == 5)
+                    glBindTexture(GL_TEXTURE_2D, textureID[indFace + 6]);
+                else glBindTexture(GL_TEXTURE_2D, textureID[indFace]);
             } else { glBindTexture(GL_TEXTURE_2D, textureID[indFace]); }
 
             glDrawArrays(GL_TRIANGLE_STRIP, indFace * NVERTICES, 4);
