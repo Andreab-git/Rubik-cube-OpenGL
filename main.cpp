@@ -35,7 +35,7 @@ void update_rotation(GLfloat rot_angle)
     for (int i = 0; i < 3; ++i)
         for (int j = 0; j < 3; ++j) {
 
-            index = 2 - j % 3;
+            index = 2 - j; /* TODO FUNZIONA ANCHE SE METTO index = j */
 
             if (x_0 == x_k) {
                 rotation = {rot_angle, 1.0, 0.0, 0.0};
