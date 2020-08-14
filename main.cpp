@@ -28,7 +28,7 @@ void update_rotation(GLfloat rot_angle)
 {
     vector<cube_rotate> face[3][3];
     int index;
-    cube_rotate rotation;
+    cube_rotate rotation{};
 
     // copy face to be rotated
     // apply rotation to face
