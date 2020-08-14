@@ -15,7 +15,7 @@ static GLenum textureID[NIMAGES];
 
 unsigned char status_sel=0;  // "boolean" for enable / disable selected faces
 GLfloat angle, fAspect;
-GLint rot_x, rot_y, crement, x_0 = 0, x_k = 0, y_0 = 0, y_k = 2, z_0 = 0, z_k = 2;
+GLint rot_x, rot_y, mov_steps, x_0 = 0, x_k = 0, y_0 = 0, y_k = 2, z_0 = 0, z_k = 2;
 vector<cube_rotate> cube_rotations[3][3][3];
 
 // init lighting
@@ -378,7 +378,7 @@ void init(void)
     // init parameters
     rot_x = 0; // view rotation x
     rot_y = 0; // view rotation y
-    crement = 5; // rotation (in/de)crement
+    mov_steps = 5; // rotation step
     angle = 60;
 
     makeMenu();
@@ -559,16 +559,16 @@ void SpecialInput(int key, int x, int y)
     switch(key)
     {
         case GLUT_KEY_UP:
-            rot_x = (rot_x - crement) % 360;
+            rot_x = (rot_x - mov_steps) % 360;
             break;
         case GLUT_KEY_DOWN:
-            rot_x = (rot_x + crement) % 360;
+            rot_x = (rot_x + mov_steps) % 360;
             break;
         case GLUT_KEY_LEFT:
-            rot_y = (rot_y + crement) % 360;
+            rot_y = (rot_y + mov_steps) % 360;
             break;
         case GLUT_KEY_RIGHT:
-            rot_y = (rot_y - crement) % 360;
+            rot_y = (rot_y - mov_steps) % 360;
             break;
     }
 
