@@ -1,5 +1,8 @@
 // Rubik Cube in OpenGL
 
+// TODO: METTERE NUOVI TASTI PER MUOVERE IL CUBO VICINO A QUELLI PER MUOVERE LE FACCE
+// TODO: TROVARE IL MODO PER RIPRISTINARE IL CUBO (FARE UNA FUNZIONE RESET)
+
 #include "readBMP.h"
 #include "data_path.h"
 #include "coordinates.h"
@@ -13,7 +16,7 @@ struct cube_rotate {
 static struct BitMapFile *images[NIMAGES];
 static GLenum textureID[NIMAGES];
 
-unsigned char status_sel=0;  // "boolean" for enable / disable selected faces
+unsigned char status_sel = 0, first_move = 0;  // "boolean" for enable / disable selected faces
 GLfloat angle, fAspect;
 GLint rot_x, rot_y, mov_steps, x_0 = 0, x_k = 0, y_0 = 0, y_k = 2, z_0 = 0, z_k = 2;
 vector<cube_rotate> cube_rotations[3][3][3];
@@ -35,7 +38,7 @@ void update_rotation(GLfloat rot_angle)
     for (int i = 0; i < 3; ++i)
         for (int j = 0; j < 3; ++j) {
 
-            index = 2 - j; /* TODO FUNZIONA ANCHE SE METTO index = j */
+            index = j;
 
             if (x_0 == x_k) {
                 rotation = {rot_angle, 1.0, 0.0, 0.0};
@@ -53,7 +56,6 @@ void update_rotation(GLfloat rot_angle)
             }
 
             face[index][i].push_back(rotation);
-
         }
 
     // copy back rotated face
@@ -75,7 +77,9 @@ void update_rotation(GLfloat rot_angle)
 // reset face selection parameters
 void reset_selected_face()
 {
-    status_sel=1;
+    if (!first_move)
+        status_sel = 1;
+    else status_sel = 0;
     x_0 = 0;
     x_k = 2;
     y_0 = 0;
@@ -332,12 +336,14 @@ void game_manual(int id)
             // move selected face
         case 'u':
             update_rotation(-90);
-            status_sel=0;
+            first_move = 1;
+            status_sel = 0;
             break;
 
         case 'o':
             update_rotation(90);
-            status_sel=0;
+            first_move = 1;
+            status_sel = 0;
             break;
     }
 
@@ -537,13 +543,15 @@ void keyInput(unsigned char key, int x, int y)
         case 'U': // counter-clockwise
         case 'u':
             update_rotation(-90);
-            status_sel=0;
+            first_move = 1;
+            status_sel = 0;
             break;
 
         case 'O': // clockwise
         case 'o':
             update_rotation(90);
-            status_sel=0;
+            first_move = 1;
+            status_sel = 0;
             break;
             // end of cube movements
 
