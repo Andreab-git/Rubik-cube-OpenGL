@@ -74,7 +74,6 @@ void update_rotation(GLfloat rot_angle)
 
 }
 
-// reset face selection parameters
 void reset_selected_face()
 {
     if (!first_move)
@@ -93,7 +92,6 @@ void camera_opt()
     gluLookAt(0, 80, 200, 0, 0, 0, 0, 1, 0);
 }
 
-//draw skyboxes
 void gen_skyboxes(void)
 {
     unsigned int indFace;
@@ -106,7 +104,6 @@ void gen_skyboxes(void)
     }
 }
 
-// draw a cube
 void draw_cube(int x, int y, int z)
 {
     unsigned int indFace;
@@ -225,7 +222,6 @@ void loadExternalTextures(void)
 
 }
 
-// specify what's shown in the window
 void view_parameters(void)
 {
     GLenum glErr;
@@ -250,7 +246,6 @@ void view_parameters(void)
     // specify observer and target positions
     camera_opt();
 }
-
 
 void top_menu(int id)
 {
@@ -450,9 +445,8 @@ void reshape(GLsizei w, GLsizei h)
     fAspect = (GLfloat) w / (GLfloat) h;
 
     view_parameters();
-} // reshape function
+}
 
-// keyboard function callback
 void keyInput(unsigned char key, int x, int y)
 {
     switch (key) {
@@ -605,4 +599,4 @@ int main(int argc, char **argv)
     glutMainLoop();
 
     return 0; /* ANSI C requires main to return int. */
-} // main
+}
