@@ -174,10 +174,10 @@ void display(void)
     glRotatef(rot_x, 1.0, 0.0, 0.0);
     glRotatef(rot_y, 0.0, 1.0, 0.0);
 
-    for (int i = 0; i < 3; ++i) // step through x axis
-        for (int j = 0; j < 3; ++j) // step through y axis
-            for (int k = 0; k < 3; ++k)  // step through z axis
-                draw_cube(i, j, k);
+    for (int x = 0; x < 3; ++x) // step through x axis
+        for (int y = 0; y < 3; ++y) // step through y axis
+            for (int z = 0; z < 3; ++z)  // step through z axis
+                draw_cube(x, y, z);
 
     // flush opengl commands
     glutSwapBuffers();
