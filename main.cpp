@@ -19,7 +19,8 @@ static struct BitMapFile *images[NIMAGES];
 static GLenum textureID[NIMAGES];
 
 unsigned char status_sel = 0, first_move = 0;  // "boolean" for enable / disable selected faces
-GLfloat angle, fAspect;
+GLfloat near_val = 1.4, // Frustum near val
+        eyeZ = 250;
 GLint rot_x, rot_y, mov_steps, x_0 = 0, x_k = 0, y_0 = 0, y_k = 2, z_0 = 0, z_k = 2;
 vector<cube_rotate> cube_rotations[3][3][3];
 
@@ -87,11 +88,6 @@ void reset_selected_face()
     y_k = 2;
     z_0 = 0;
     z_k = 2;
-}
-
-void camera_opt()
-{
-    gluLookAt(0, 80, 200, 0, 0, 0, 0, 1, 0);
 }
 
 void gen_skyboxes(void)
@@ -167,7 +163,7 @@ void display(void)
     glLoadIdentity();
 
     // set camera position
-    camera_opt();
+    gluLookAt(0, 80, eyeZ, 0, 0, 0, 0, 1, 0);
 
     // apply visualization transformations
     glRotatef(rot_x, 1.0, 0.0, 0.0);
@@ -224,31 +220,6 @@ void loadExternalTextures(void)
 
 }
 
-void view_parameters(void)
-{
-    GLenum glErr;
-
-    // specify projection coordinate system
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    // specify projection perspective
-    gluPerspective(angle, fAspect, 0.4, 700);
-
-    // ... it does not hurt to check that everything went well
-    if ((glErr=glGetError()) != 0) {
-        printf("Errore = %d \n", glErr);
-        exit(-1);
-    }
-
-    // init model coordinate system
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    // specify observer and target positions
-    camera_opt();
-}
-
 void top_menu(int id)
 {
     // Exit if the user selected the "quit" option
@@ -264,13 +235,11 @@ void game_manual(int id)
 {
     switch (id) {
         case '+':
-            if (angle >= 10) angle -= 5;
-            view_parameters();
+            if (eyeZ >= 150) eyeZ -= 10;
             break;
 
         case '-':
-            if (angle <= 80) angle += 5;
-            view_parameters();
+            if (eyeZ >= 150) eyeZ += 10;
             break;
 
             // x-axis faces
@@ -382,7 +351,6 @@ void init(void)
     rot_x = 0; // view rotation x
     rot_y = 0; // view rotation y
     mov_steps = 5; // rotation step
-    angle = 60;
 
     makeMenu();
 
@@ -421,6 +389,21 @@ void init(void)
 
     loadExternalTextures();
 
+    GLenum glErr;
+
+    // specify projection coordinate system
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    // specify projection perspective
+    glFrustum(-1,1,-1,1,near_val,750);
+
+    // ... it does not hurt to check that everything went well
+    if ((glErr=glGetError()) != 0) {
+        printf("Errore = %d \n", glErr);
+        exit(-1);
+    }
+
     // initialize model view transforms
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -435,20 +418,6 @@ void init(void)
     glTexCoordPointer(2, GL_FLOAT, 0, textCoords);
 }
 
-void reshape(GLsizei w, GLsizei h)
-{
-    // prevents division by zero
-    if (h == 0) h = 1;
-
-    // viewport size
-    glViewport(0, 0, w, h);
-
-    // aspect ratio
-    fAspect = (GLfloat) w / (GLfloat) h;
-
-    view_parameters();
-}
-
 void keyInput(unsigned char key, int x, int y)
 {
     switch (key) {
@@ -460,13 +429,11 @@ void keyInput(unsigned char key, int x, int y)
             // ESC
             exit(0);
         case '+':
-            if (angle >= 10) angle -= 5;
-            view_parameters();
+            if (eyeZ >= 150) eyeZ -= 5;
             break;
 
         case '-':
-            if (angle <= 80) angle += 5;
-            view_parameters();
+            if (eyeZ <= 270) eyeZ += 5;
             break;
 
             // x-axis faces
@@ -597,7 +564,6 @@ int main(int argc, char **argv)
     // Call initialization routines
     init();
     glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
     glutMainLoop();
 
     return 0; /* ANSI C requires main to return int. */
