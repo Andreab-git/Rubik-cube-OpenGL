@@ -239,7 +239,7 @@ void game_manual(int id)
             break;
 
         case '-':
-            if (eyeZ >= 150) eyeZ += 10;
+            if (eyeZ <= 270) eyeZ += 10;
             break;
 
             // x-axis faces
