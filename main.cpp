@@ -176,7 +176,7 @@ void display(void)
             for (int z = 0; z < 3; ++z)  // step through z axis
                 draw_cube(x, y, z);
 
-    // flush opengl commands
+    // flush opengl commands (swaps the buffers of the current window if double buffered)
     glutSwapBuffers();
 }
 
