@@ -77,7 +77,7 @@ void update_rotation(GLfloat rot_angle)
 
 }
 
-void reset_selected_face()
+void reset_selected_face(void)
 {
     if (!first_move)
         status_sel = 1;
