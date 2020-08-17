@@ -1,8 +1,8 @@
 // Rubik Cube in OpenGL
 
 // TODO: METTERE NUOVI TASTI PER MUOVERE IL CUBO VICINO A QUELLI PER MUOVERE LE FACCE
-// TODO: TROVARE IL MODO PER RIPRISTINARE IL CUBO (FARE UNA FUNZIONE RESET)
-// TODO: FUNZIONE RESHAPE, COME FUNZIONA?
+
+// TODO: VEDERE SE SI POSSONO METTERE I COMANDI IN UN ALTRO HEADER
 
 
 #include "readBMP.h"
@@ -20,7 +20,7 @@ static GLenum textureID[NIMAGES];
 
 unsigned char status_sel = 0, first_move = 0;  // "boolean" for enable / disable selected faces
 GLfloat near_val = 1.4, // Frustum near val
-        eyeZ = 250;
+eyeZ = 250;
 GLint rot_x, rot_y, mov_steps, x_0 = 0, x_k = 0, y_0 = 0, y_k = 2, z_0 = 0, z_k = 2;
 vector<cube_rotate> cube_rotations[3][3][3];
 
@@ -41,11 +41,11 @@ void update_rotation(GLfloat rot_angle)
     for (int i = 0; i < 3; ++i)
         for (int j = 0; j < 3; ++j) {
 
-            index = j;
+            index = 2 - j%3;
 
             if (x_0 == x_k) {
                 rotation = {rot_angle, 1.0, 0.0, 0.0};
-                face[index][i] = cube_rotations[x_k][i][j];
+                face[index][i] = cube_rotations[x_k][i][j]; // assegno un vettore
             }
 
             if (y_0 == y_k) {
@@ -58,7 +58,7 @@ void update_rotation(GLfloat rot_angle)
                 face[index][i] = cube_rotations[j][i][z_k];
             }
 
-            face[index][i].push_back(rotation);
+            face[index][i].push_back(rotation); // pusho un nuovo elemento e quindi diventa vettore +1
         }
 
     // copy back rotated face
@@ -311,6 +311,14 @@ void game_manual(int id)
             first_move = 1;
             status_sel = 0;
             break;
+
+        case 'r':
+            for (int i = 0; i < 3; i++)
+                for(int j = 0; j < 3; j++)
+                    for(int k = 0; k < 3; k++)
+                        cube_rotations[i][j][k].clear();
+        default:
+            break;
     }
 
     glutPostRedisplay();
@@ -335,6 +343,7 @@ void makeMenu(void)
     glutAddMenuEntry("sposta terza colonna in z --- > ", 'z');
     glutAddMenuEntry("sposta in senso orario --- > u", 'u');
     glutAddMenuEntry("sposta in senso antiorario --- > o", 'o');
+    glutAddMenuEntry("resetta cubo --- > r", 'r');
 
     // The top menu is created: its callback function is registered and menu entries, including a submenu, added.
     glutCreateMenu(top_menu);
@@ -518,6 +527,13 @@ void keyInput(unsigned char key, int x, int y)
             break;
             // end of cube movements
 
+        case 'R':
+        case 'r':
+            for (int i = 0; i < 3; i++)
+                for(int j = 0; j < 3; j++)
+                    for(int k = 0; k < 3; k++)
+                        cube_rotations[i][j][k].clear();
+            break;
         default:
             break;
     }
