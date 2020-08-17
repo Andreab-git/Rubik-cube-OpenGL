@@ -239,7 +239,7 @@ void game_manual(int id)
             break;
 
         case '-':
-            if (eyeZ <= 270) eyeZ += 10;
+            if (eyeZ <= 255) eyeZ += 10;
             break;
 
             // x-axis faces
@@ -433,7 +433,7 @@ void keyInput(unsigned char key, int x, int y)
             break;
 
         case '-':
-            if (eyeZ <= 270) eyeZ += 5;
+            if (eyeZ <= 255) eyeZ += 5;
             break;
 
             // x-axis faces
