@@ -91,7 +91,7 @@ void gen_skyboxes(void)
 {
     unsigned int indFace;
 
-    for (indFace=6; indFace<(NFACES*2); indFace++) {
+    for (indFace = 6; indFace < (NFACES*2); indFace++) {        // index starts from 6 (modified textures)
         glBindTexture(GL_TEXTURE_2D, textureID[12]);
         glDrawArrays(GL_TRIANGLE_STRIP,  indFace*NVERTICES, 4);
         // unbind texture
