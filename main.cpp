@@ -1,9 +1,6 @@
 // Rubik Cube in OpenGL
 
-// TODO: METTERE NUOVI TASTI PER MUOVERE IL CUBO VICINO A QUELLI PER MUOVERE LE FACCE
-
 // TODO: VEDERE SE SI POSSONO METTERE I COMANDI IN UN ALTRO HEADER
-
 
 #include "readBMP.h"
 #include "data_path.h"
@@ -509,6 +506,27 @@ void keyInput(unsigned char key, int x, int y)
             reset_selected_face();
             z_0 = 2;
             z_k = 2;
+            break;
+
+            // rotational movement
+        case 'L':
+        case 'l':
+            rot_y = (rot_y - mov_steps) % 360;
+            break;
+
+        case 'J':
+        case 'j':
+            rot_y = (rot_y + mov_steps) % 360;
+            break;
+
+        case 'I':
+        case 'i':
+            rot_x = (rot_x + mov_steps) % 360;
+            break;
+
+        case 'K':
+        case 'k':
+            rot_x = (rot_x - mov_steps) % 360;
             break;
 
             // move selected face
