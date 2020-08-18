@@ -1,6 +1,6 @@
 #define NFACES 6
 #define NVERTICES 4
-#define CUBESIZE 30.0
+#define CUBESIZE 32.0
 #define SKYBOX_IMG 550.0
 
 GLfloat half_image = SKYBOX_IMG/2;
