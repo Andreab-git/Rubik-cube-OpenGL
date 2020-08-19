@@ -8,7 +8,7 @@
 
 using namespace std;
 
-struct cube_rotate {
+struct cube_data {
     GLfloat angle, x, y, z;
 };
 
@@ -19,7 +19,7 @@ unsigned char status_sel = 0, first_move = 0;  // "boolean" for enable / disable
 GLfloat near_val = 1.4, // Frustum near val
 eyeZ = 250;
 GLint rot_x, rot_y, mov_steps, x_0 = 0, x_k = 0, y_0 = 0, y_k = 2, z_0 = 0, z_k = 2;
-vector<cube_rotate> cube_rotations[3][3][3];
+vector<cube_data> cube_rotations[3][3][3];
 
 // init lighting
 GLfloat lightAmb[4] = {0.8, 0.8, 0.8, 1.0};
@@ -29,80 +29,24 @@ GLfloat lightPos[4] = {0.0, 150.0, 50.0, 1.0};
 
 void update_rotation(GLfloat rot_angle)
 {
-    vector<cube_rotate> face[3][3];
-    int index;
-    cube_rotate rotation{};
+    int step_up, step_right;
+    cube_data rotation{};
 
-    // copy face to be rotated
-    // apply rotation to face
-    for (int i = 0; i < 3; ++i)
-        for (int j = 0; j < 3; ++j) {
-
-            index = 2 - j%3;
+    // apply rotation to cube
+    for (step_up = 0; step_up < 3; ++step_up)
+        for (step_right = 0; step_right < 3; ++step_right) {
 
             if (x_0 == x_k) {
                 rotation = {rot_angle, 1.0, 0.0, 0.0};
-                face[index][i] = cube_rotations[x_k][i][j]; // assegno un vettore
-            }
-
-            if (y_0 == y_k) {
+                cube_rotations[x_k][step_up][step_right].push_back(rotation);
+            } else if (y_0 == y_k) {
                 rotation = {rot_angle, 0.0, 1.0, 0.0};
-                face[index][i] = cube_rotations[j][y_k][i];
-            }
-
-            if (z_0 == z_k) {
+                cube_rotations[step_up][y_k][step_right].push_back(rotation);
+            } else if (z_0 == z_k) {
                 rotation = {-1 * rot_angle, 0.0, 0.0, 1.0};
-                face[index][i] = cube_rotations[j][i][z_k];
+                cube_rotations[step_up][step_right][z_k].push_back(rotation);
             }
-
-            face[index][i].push_back(rotation); // pusho un nuovo elemento e quindi diventa vettore +1
         }
-
-
-    /* TODO RIMUOVERE PRIMA DI CONSEGNARE IL PROGETTO! SOLO A SCOPO DI DEBUGGING */
-
-    for (int i = 0; i < 3; ++i)
-        for (int j = 0; j < 3; ++j) {
-
-            for (int size = 0; size < face[j][i].size(); size++)
-            printf("[%d] [%d] Valore angolo: %.2f\t valore X=%.2f, Y=%.2f, Z=%.2f\n", j, i, face[j][i][size].angle,face[j][i][size].x,face[j][i][size].y,face[j][i][size].z);
-
-        }
-
-    printf("\n\n\n");
-
-        /* *********************************************************************** */
-
-
-
-    // copy back rotated face
-    for (int i = 0; i < 3; ++i)
-        for (int j = 0; j < 3; ++j) {
-
-            if (x_0 == x_k)
-                cube_rotations[x_k][i][j] = face[i][j];
-
-            if (y_0 == y_k)
-                cube_rotations[j][y_k][i] = face[i][j];
-
-            if (z_0 == z_k)
-                cube_rotations[j][i][z_k] = face[i][j];
-        }
-
-
-
-    /* Stampo dimensione di cube_rotations */
-
-    for (int x = 0; x < 1; x++)
-        for (int y = 0; y < 3; y++)
-            for (int z = 0; z < 3; z++) {
-
-                for(int size = 0; size < (int)cube_rotations[x][y][z].size(); size++)
-                    printf("[%d][%d][%d] \tX=%.2f, Y=%.f, Z=%.f\tAngolo: %.f\n", x, y, z, cube_rotations[x][y][z][size].x, cube_rotations[x][y][z][size].y, cube_rotations[x][y][z][size].z, cube_rotations[x][y][z][size].angle );
-                printf("\n");
-
-            }
-
 
 }
 
@@ -135,7 +79,7 @@ void draw_cube(int x, int y, int z)
 {
     unsigned int indFace;
 
-    vector<cube_rotate> lrot = cube_rotations[x][y][z];
+    vector<cube_data> cube_story = cube_rotations[x][y][z];
 
     glPushMatrix();
 
@@ -147,12 +91,8 @@ void draw_cube(int x, int y, int z)
         gen_skyboxes();
 
     // rotate cube to correct position
-    for (int i = (int)(lrot.size() - 1); i >= 0; --i)
-        glRotatef(lrot[i].angle, lrot[i].x, lrot[i].y, lrot[i].z);
-
-//    for (int i = 0; i <= (int)(lrot.size() - 1); ++i)
-//        glRotatef(lrot[i].angle, lrot[i].x, lrot[i].y, lrot[i].z);
-
+    for (int i = (int)(cube_story.size() - 1); i >= 0; --i)
+        glRotatef(cube_story[i].angle, cube_story[i].x, cube_story[i].y, cube_story[i].z);
 
     for (indFace=0; indFace<NFACES; indFace++) {
 
@@ -183,6 +123,7 @@ void draw_cube(int x, int y, int z)
             // unbind texture
             glBindTexture(GL_TEXTURE_2D, 0);
         }
+
     }
 
     glPopMatrix();
@@ -346,7 +287,7 @@ void game_manual(int id)
             break;
 
         case 'r':
-            for (int i = 0; i < 3; i++)
+            for(int i = 0; i < 3; i++)
                 for(int j = 0; j < 3; j++)
                     for(int k = 0; k < 3; k++)
                         cube_rotations[i][j][k].clear();

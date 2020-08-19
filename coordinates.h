@@ -73,7 +73,7 @@ GLfloat textCoords[NFACES*NVERTICES*2*2] =
         };
 
 // vertex coordinates
-GLfloat vertexCoords[NFACES * NVERTICES * 3 *2] = {
+GLfloat vertexCoords[NFACES*NVERTICES*3*2] = {
         /* red face (front) */
         -half_cube, -half_cube, half_cube,
         half_cube, -half_cube, half_cube,
