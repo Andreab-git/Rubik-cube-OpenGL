@@ -33,8 +33,8 @@ void update_rotation(GLfloat rot_angle)
     cube_data rotation{};
 
     // apply rotation to cube
-    for (step_up = 0; step_up < 3; ++step_up)
-        for (step_right = 0; step_right < 3; ++step_right) {
+    for (step_up = 0; step_up < 3; step_up++)
+        for (step_right = 0; step_right < 3; step_right++) {
 
             if (x_0 == x_k) {
                 rotation = {rot_angle, 1.0, 0.0, 0.0};
@@ -91,7 +91,7 @@ void draw_cube(int x, int y, int z)
         gen_skyboxes();
 
     // rotate cube to correct position
-    for (int i = (int)(cube_story.size() - 1); i >= 0; --i)
+    for (int i = (int)(cube_story.size() - 1); i >= 0; i--)
         glRotatef(cube_story[i].angle, cube_story[i].x, cube_story[i].y, cube_story[i].z);
 
     for (indFace=0; indFace<NFACES; indFace++) {
@@ -143,9 +143,9 @@ void display(void)
     glRotatef(rot_x, 1.0, 0.0, 0.0);
     glRotatef(rot_y, 0.0, 1.0, 0.0);
 
-    for (int x = 0; x < 3; ++x) // step through x axis
-        for (int y = 0; y < 3; ++y) // step through y axis
-            for (int z = 0; z < 3; ++z)  // step through z axis
+    for (int x = 0; x < 3; x++) // step through x axis
+        for (int y = 0; y < 3; y++) // step through y axis
+            for (int z = 0; z < 3; z++)  // step through z axis
                 draw_cube(x, y, z);
 
     // flush opengl commands (swaps the buffers of the current window if double buffered)
