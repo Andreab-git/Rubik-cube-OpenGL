@@ -58,6 +58,24 @@ void update_rotation(GLfloat rot_angle)
             face[index][i].push_back(rotation); // pusho un nuovo elemento e quindi diventa vettore +1
         }
 
+
+    /* TODO RIMUOVERE PRIMA DI CONSEGNARE IL PROGETTO! SOLO A SCOPO DI DEBUGGING */
+
+    for (int i = 0; i < 3; ++i)
+        for (int j = 0; j < 3; ++j) {
+
+            for (int size = 0; size < face[i][j].size(); size++)
+            printf("[%d] [%d] Valore angolo: %.2f\t valore X=%.2f, Y=%.2f, Z=%.2f\n", i,j, face[i][j][size].angle,face[i][j][size].x,face[i][j][size].y,face[i][j][size].z);
+
+        }
+
+    printf("rot_angle = %f\n\n", rot_angle);
+
+
+
+
+
+
     // copy back rotated face
     for (int i = 0; i < 3; ++i)
         for (int j = 0; j < 3; ++j) {
