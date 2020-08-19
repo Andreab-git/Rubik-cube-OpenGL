@@ -362,7 +362,7 @@ void init(void)
 
     // material brightness capacity
     GLfloat specularity[4] = {1.0, 1.0, 1.0, 1.0};
-    GLint material_specularity = 80;
+    GLint material_shininess = 80;
 
     // black background
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -370,7 +370,7 @@ void init(void)
     // material specularity
     glMaterialfv(GL_FRONT, GL_SPECULAR, specularity);
     // brightness concentration
-    glMateriali(GL_FRONT, GL_SHININESS, material_specularity);
+    glMateriali(GL_FRONT, GL_SHININESS, material_shininess);
 
     // activate ambient light
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightAmb);
