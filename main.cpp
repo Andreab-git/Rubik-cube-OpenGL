@@ -48,6 +48,17 @@ void update_rotation(GLfloat rot_angle)
             }
         }
 
+    // TODO MESSO SOLO PER DEBUGGING!!! RIMUOVERE PRIMA DI CONSEGNARE IL PROGETTO
+    for (int x = 0; x < 3; x++) // step through x axis
+        for (int y = 0; y < 3; y++) // step through y axis
+            for (int z = 0; z < 3; z++)  // step through z axis
+                for (int size = 0; size < cube_rotations[x][y][z].size(); size++)
+                    printf("[%d][%d][%d] angolo=%.f X=%.f Y=%.f Z=%.f\n", x, y, z, cube_rotations[x][y][z][size].angle,
+                           cube_rotations[x][y][z][size].x,
+                           cube_rotations[x][y][z][size].y,
+                           cube_rotations[x][y][z][size].z);
+
+    printf("\n\n");
 }
 
 void reset_selected_face(void)
