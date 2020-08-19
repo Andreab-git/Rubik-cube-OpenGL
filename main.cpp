@@ -64,15 +64,14 @@ void update_rotation(GLfloat rot_angle)
     for (int i = 0; i < 3; ++i)
         for (int j = 0; j < 3; ++j) {
 
-            for (int size = 0; size < face[i][j].size(); size++)
-            printf("[%d] [%d] Valore angolo: %.2f\t valore X=%.2f, Y=%.2f, Z=%.2f\n", i,j, face[i][j][size].angle,face[i][j][size].x,face[i][j][size].y,face[i][j][size].z);
+            for (int size = 0; size < face[j][i].size(); size++)
+            printf("[%d] [%d] Valore angolo: %.2f\t valore X=%.2f, Y=%.2f, Z=%.2f\n", j, i, face[j][i][size].angle,face[j][i][size].x,face[j][i][size].y,face[j][i][size].z);
 
         }
 
-    printf("rot_angle = %f\n\n", rot_angle);
+    printf("\n\n\n");
 
-
-
+        /* *********************************************************************** */
 
 
 
@@ -89,6 +88,21 @@ void update_rotation(GLfloat rot_angle)
             if (z_0 == z_k)
                 cube_rotations[j][i][z_k] = face[i][j];
         }
+
+
+
+    /* Stampo dimensione di cube_rotations */
+
+    for (int x = 0; x < 1; x++)
+        for (int y = 0; y < 3; y++)
+            for (int z = 0; z < 3; z++) {
+
+                for(int size = 0; size < (int)cube_rotations[x][y][z].size(); size++)
+                    printf("[%d][%d][%d] \tX=%.2f, Y=%.f, Z=%.f\tAngolo: %.f\n", x, y, z, cube_rotations[x][y][z][size].x, cube_rotations[x][y][z][size].y, cube_rotations[x][y][z][size].z, cube_rotations[x][y][z][size].angle );
+                printf("\n");
+
+            }
+
 
 }
 
