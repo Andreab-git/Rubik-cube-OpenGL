@@ -115,8 +115,12 @@ void draw_cube(int x, int y, int z)
         gen_skyboxes();
 
     // rotate cube to correct position
-    for (int i = lrot.size() - 1; i >= 0; --i)
+    for (int i = (int)(lrot.size() - 1); i >= 0; --i)
         glRotatef(lrot[i].angle, lrot[i].x, lrot[i].y, lrot[i].z);
+
+//    for (int i = 0; i <= (int)(lrot.size() - 1); ++i)
+//        glRotatef(lrot[i].angle, lrot[i].x, lrot[i].y, lrot[i].z);
+
 
     for (indFace=0; indFace<NFACES; indFace++) {
 
