@@ -1,7 +1,5 @@
 // Rubik Cube in OpenGL
 
-// TODO: VEDERE SE SI POSSONO METTERE I COMANDI IN UN ALTRO HEADER
-
 #include "readBMP.h"
 #include "data_path.h"
 #include "coordinates.h"
@@ -47,18 +45,6 @@ void update_rotation(GLfloat rot_angle)
                 cube_rotations[step_up][step_right][z_k].push_back(rotation);
             }
         }
-
-    // TODO MESSO SOLO PER DEBUGGING!!! RIMUOVERE PRIMA DI CONSEGNARE IL PROGETTO
-    for (int x = 0; x < 3; x++) // step through x axis
-        for (int y = 0; y < 3; y++) // step through y axis
-            for (int z = 0; z < 3; z++)  // step through z axis
-                for (int size = 0; size < cube_rotations[x][y][z].size(); size++)
-                    printf("[%d][%d][%d] angolo=%.f X=%.f Y=%.f Z=%.f\n", x, y, z, cube_rotations[x][y][z][size].angle,
-                           cube_rotations[x][y][z][size].x,
-                           cube_rotations[x][y][z][size].y,
-                           cube_rotations[x][y][z][size].z);
-
-    printf("\n\n");
 }
 
 void reset_selected_face(void)
@@ -150,7 +136,10 @@ void display(void)
     // set camera position
     gluLookAt(0, 80, eyeZ, 0, 0, 0, 0, 1, 0);
 
-    // apply visualization transformations
+    // move the cube origin
+    glTranslatef(0.0, 0.0, -4.0);
+
+    // apply visualization rotations
     glRotatef(rot_x, 1.0, 0.0, 0.0);
     glRotatef(rot_y, 0.0, 1.0, 0.0);
 
