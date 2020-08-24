@@ -293,6 +293,7 @@ void game_manual(int id)
                 for(int j = 0; j < 3; j++)
                     for(int k = 0; k < 3; k++)
                         cube_rotations[i][j][k].clear();
+            first_move = 0;
         default:
             break;
     }
@@ -530,6 +531,7 @@ void keyInput(unsigned char key, int x, int y)
                 for(int j = 0; j < 3; j++)
                     for(int k = 0; k < 3; k++)
                         cube_rotations[i][j][k].clear();
+            first_move = 0;
             break;
         default:
             break;
