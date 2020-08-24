@@ -110,7 +110,7 @@ GLfloat vertexCoords[NFACES*NVERTICES*3*2] = {
         -half_cube, -half_cube, -half_cube,
         half_cube, -half_cube, -half_cube,
 
-        /* skyboxes_image */
+        /* skyboxes_images */
 
         /* back */
         -half_image, -half_image, -half_image,
@@ -189,7 +189,7 @@ GLfloat tNormals[NFACES*NVERTICES*3*2] =
                 0.0, -1.0, 0.0,
                 0.0, -1.0, 0.0,
 
-                /*skyboxes_image*/
+                /* skyboxes_images */
 
                 /* back */
                 0.0, 0.0, 1.0,
