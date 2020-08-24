@@ -1,5 +1,5 @@
 /*
- * Creato da Andrea Benà ed Alessandra Cangio
+ * Creato da Andrea Benà (matr. 133793) ed Alessandra Cangio (matr. 134325)
 */
 
 #include "readBMP.h"
