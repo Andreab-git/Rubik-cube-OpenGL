@@ -1,4 +1,6 @@
-// Rubik Cube in OpenGL
+/*
+ * Creato da Andrea Benà ed Alessandra Cangio
+*/
 
 #include "readBMP.h"
 #include "data_path.h"
