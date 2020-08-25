@@ -355,7 +355,7 @@ void init(void)
     // activate ambient light
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightAmb);
 
-    // Enable local viewpoint.
+    // value that specifies how specular reflection angles are computed
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 
     // define light parameters
