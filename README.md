@@ -1,3 +1,3 @@
 # Rubik-cube-OpenGL
 
-Progetto per grafica computerizzata
+University project created for the Computer Graphics course.
